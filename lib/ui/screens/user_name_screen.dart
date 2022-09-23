@@ -14,12 +14,13 @@ class UserNameScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final nameController = useTextEditingController();
 
-    void gotoHomeScreen() => Navigator.of(context).pushReplacementNamed(homeScreenRoute);
-
     bool validateUserName(String? userName) => userName != null && userName.isNotEmpty;
+    void gotoHomeScreen() => Navigator.of(context).pushReplacementNamed(kHomeScreenRoute);
+
+    final isLoading = ref.watch(isLoadingProvider);
 
     return Scaffold(
-      body: ref.watch(isLoadingProvider)
+      body: isLoading
           ? const CustomLoadingIndicator()
           : Center(
               child: Column(
@@ -45,16 +46,11 @@ class UserNameScreen extends HookConsumerWidget {
                       final isUserNameValid = validateUserName(userName);
 
                       if (isUserNameValid) {
-                        ref.read(isLoadingProvider.notifier).state = true;
+                        final success = await ref.watch(authProvider).updateUserNameAndAddUser(token: token, userName: userName);
 
-                        final success = await ref.watch(authProvider).updateUserName(token: token, userName: userName);
                         if (success) {
                           gotoHomeScreen();
-                        } else {
-                          dev.log('there was an error, please try again');
                         }
-
-                        ref.read(isLoadingProvider.notifier).state = false;
                       } else {
                         dev.log('user name is not valid');
                       }

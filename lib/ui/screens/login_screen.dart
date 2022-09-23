@@ -1,66 +1,86 @@
-import 'dart:developer' as dev;
+import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quiz_u/constants.dart';
 import 'package:quiz_u/controllers/providers.dart';
 import 'package:quiz_u/controllers/utils.dart';
+import 'package:quiz_u/ui/widgets/custom_button.dart';
+import 'package:quiz_u/ui/widgets/custom_text_field.dart';
 import 'package:quiz_u/ui/widgets/loading_indicator.dart';
 
-class LoginScreen extends HookWidget {
+class LoginScreen extends HookConsumerWidget {
   const LoginScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    void goToUserNameScreen() => Navigator.of(context).pushReplacementNamed(userNameScreenRoute);
-    void gotoHomeScreen() => Navigator.of(context).pushReplacementNamed(homeScreenRoute);
+  Widget build(BuildContext context, WidgetRef ref) {
+    void goToUserNameScreen() => Navigator.of(context).pushReplacementNamed(kUserNameScreenRoute);
+
+    void goToHomeScreen() => Navigator.of(context).pushReplacementNamed(kHomeScreenRoute);
+
+    final countryCodeNotifier = useState<CountryCode>(
+      const CountryCode(name: 'Saudi Arabia', code: 'SA', dialCode: '+966'),
+    );
 
     final mobileController = useTextEditingController();
-    return Consumer(
-      builder: ((context, ref, child) {
-        return Scaffold(
-          body: ref.watch(isLoadingProvider)
-              ? const CustomLoadingIndicator()
-              : Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(40.0),
-                        child: TextField(controller: mobileController, decoration: const InputDecoration(border: OutlineInputBorder())),
-                      ),
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          backgroundColor: const Color(0xFF5B61FE),
-                          foregroundColor: Colors.white,
-                          padding: const EdgeInsets.all(15),
-                        ),
-                        onPressed: () async {
-                          ref.read(isLoadingProvider.notifier).state = true;
+    final countryCodeController = useTextEditingController(text: '${countryCodeNotifier.value.name} (${countryCodeNotifier.value.dialCode})');
 
-                          final mobileNumber = mobileController.text.trim();
-                          final signUpOrLogin = await ref.read(authProvider).loginOrSignUp(context, mobileNumber: mobileNumber);
-
-                          if (signUpOrLogin == AuthState.signedUp) {
-                            goToUserNameScreen();
-                          } else if (signUpOrLogin == AuthState.loggedIn) {
-                            gotoHomeScreen();
-                          } else if (signUpOrLogin == AuthState.error) {
-                            dev.log('error');
-                          }
-
-                          ref.read(isLoadingProvider.notifier).state = false;
-                        },
-                        child: const Text(
-                          'Log In',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                    ],
+    return ref.watch(isLoadingProvider)
+        ? const CustomLoadingIndicator()
+        : Scaffold(
+            backgroundColor: kAppBackgroundColor,
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(height: 200),
+                  Text('QuizU', style: kHeadLineTextStyle),
+                  const SizedBox(height: 130),
+                  CustomTextField(
+                    controller: countryCodeController,
+                    focus: AlwaysDisabledFocusNode(),
+                    style: const TextStyle(color: kPrimaryTextColor, fontWeight: FontWeight.bold),
+                    label: "Country/Region",
+                    prefixIcon: Container(
+                      padding: const EdgeInsets.fromLTRB(15, 15, 10, 15),
+                      child: countryCodeNotifier.value.flagImage,
+                    ),
+                    suffixIcon: const Icon(Icons.arrow_drop_down, size: 35),
+                    keyBoardType: TextInputType.number,
+                    onTap: () async {
+                      final code = await countryPicker.showPicker(context: context);
+                      if (code == null) return;
+                      countryCodeNotifier.value = code;
+                      countryCodeController.text = '${code.name} (${code.dialCode})';
+                    },
                   ),
-                ),
-        );
-      }),
-    );
+                  const SizedBox(height: 16),
+                  CustomTextField(
+                    style: const TextStyle(color: kPrimaryTextColor, fontWeight: FontWeight.bold),
+                    label: "Enter Phone Number",
+                    controller: mobileController,
+                    keyBoardType: TextInputType.number,
+                  ),
+                  const SizedBox(height: 150),
+                  CustomButton(
+                    "Start",
+                    width: 200,
+                    height: 65,
+                    margin: const EdgeInsets.symmetric(horizontal: 30),
+                    style: kPrimaryTextStyle.copyWith(fontWeight: FontWeight.bold, fontSize: 24),
+                    borderRadius: 5,
+                    onPressed: () async {
+                      final mobileNumber = '${countryCodeNotifier.value.dialCode}${mobileController.text.trim()}';
+
+                      final signUpOrLogin = await ref.read(authProvider).loginOrSignUp(mobileNumber: mobileNumber);
+
+                      if (signUpOrLogin == null) return;
+
+                      signUpOrLogin == AuthState.signedUp ? goToUserNameScreen() : goToHomeScreen();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
   }
 }
