@@ -1,3 +1,5 @@
+import 'dart:developer' as dev;
+
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -18,6 +20,8 @@ class LoginScreen extends HookConsumerWidget {
 
     void goToHomeScreen() => Navigator.of(context).pushReplacementNamed(kHomeScreenRoute);
 
+    void goToConfirmOtpScreen() => Navigator.of(context).pushNamed(kConfirmOtpScreenRoute);
+
     final countryCodeNotifier = useState<CountryCode>(
       const CountryCode(name: 'Saudi Arabia', code: 'SA', dialCode: '+966'),
     );
@@ -36,16 +40,15 @@ class LoginScreen extends HookConsumerWidget {
                   Text('QuizU', style: kHeadLineTextStyle),
                   const SizedBox(height: 130),
                   CustomTextField(
-                    controller: countryCodeController,
                     focus: AlwaysDisabledFocusNode(),
                     style: const TextStyle(color: kPrimaryTextColor, fontWeight: FontWeight.bold),
                     label: "Country/Region",
+                    controller: countryCodeController,
                     prefixIcon: Container(
                       padding: const EdgeInsets.fromLTRB(15, 15, 10, 15),
                       child: countryCodeNotifier.value.flagImage,
                     ),
                     suffixIcon: const Icon(Icons.arrow_drop_down, size: 35),
-                    keyBoardType: TextInputType.number,
                     onTap: () async {
                       final code = await countryPicker.showPicker(context: context);
                       if (code == null) return;
@@ -71,11 +74,15 @@ class LoginScreen extends HookConsumerWidget {
                     onPressed: () async {
                       final mobileNumber = '${countryCodeNotifier.value.dialCode}${mobileController.text.trim()}';
 
+                      dev.log(mobileNumber);
+
                       final signUpOrLogin = await ref.read(authProvider).loginOrSignUp(mobileNumber: mobileNumber);
 
                       if (signUpOrLogin == null) return;
 
-                      signUpOrLogin == AuthState.signedUp ? goToUserNameScreen() : goToHomeScreen();
+                      goToConfirmOtpScreen();
+
+                      // signUpOrLogin == AuthState.signedUp ? goToUserNameScreen() : goToHomeScreen();
                     },
                   ),
                 ],

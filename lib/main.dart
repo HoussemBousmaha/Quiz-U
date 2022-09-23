@@ -7,6 +7,7 @@ import 'package:quiz_u/constants.dart';
 import 'package:quiz_u/controllers/providers.dart';
 import 'package:quiz_u/controllers/utils.dart';
 import 'package:quiz_u/firebase_options.dart';
+import 'package:quiz_u/ui/screens/confirm_otp_screen.dart';
 import 'package:quiz_u/ui/screens/home_screen.dart';
 import 'package:quiz_u/ui/screens/login_screen.dart';
 import 'package:quiz_u/ui/screens/profile_screen.dart';
@@ -35,6 +36,7 @@ class QuizApp extends StatelessWidget {
         kLoginScreenRoute: (context) => const LoginScreen(),
         kUserNameScreenRoute: (context) => const UserNameScreen(),
         kProfileScreenRoute: (context) => const ProfileScreen(),
+        kConfirmOtpScreenRoute: (context) => const ConfirmOTPScreen(),
       },
     );
   }

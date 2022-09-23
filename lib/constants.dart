@@ -14,6 +14,7 @@ const kHomeScreenRoute = '/home-screen/';
 const kLoginScreenRoute = '/login-screen/';
 const kUserNameScreenRoute = '/userName-screen/';
 const kProfileScreenRoute = '/profile-screen/';
+const kConfirmOtpScreenRoute = '/confirm-otp-screen/';
 
 const kAppBackgroundColor = Color(0xFFEFF6FE);
 
