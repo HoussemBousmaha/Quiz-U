@@ -1,20 +1,39 @@
 import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quiz_u/constants.dart';
+import 'package:quiz_u/controllers/providers.dart';
+import 'package:quiz_u/controllers/utils.dart';
 import 'package:quiz_u/ui/widgets/code_sent_card.dart';
 import 'package:quiz_u/ui/widgets/custom_button.dart';
+import 'package:quiz_u/ui/widgets/custom_otp_text_field.dart';
 
 class ConfirmOTPScreen extends HookConsumerWidget {
   const ConfirmOTPScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
 
-    void goToHomeScreen() => Navigator.of(context).pushNamedAndRemoveUntil(kHomeScreenRoute, ((route) => false));
+    void goToAuthWrapper() => Navigator.of(context).pushNamedAndRemoveUntil(kAuthWrapperRoute, (route) => false);
+    void goToUserNameScreen() => Navigator.of(context).pushNamedAndRemoveUntil(kUserNameScreenRoute, (route) => false);
+
+    void loginOrSignUp(String otp) async {
+      final mobileNumber = ref.watch(mobileNumberProvider);
+
+      final signUpOrLogin = await ref.read(authProvider).loginOrSignUp(mobileNumber: mobileNumber);
+
+      if (signUpOrLogin == AuthState.loggedIn) {
+        ref.refresh(isTokenValidProvider);
+        goToAuthWrapper();
+      } else if (signUpOrLogin == AuthState.signedUp) {
+        goToUserNameScreen();
+      } else {
+        dev.log('There were a problem');
+      }
+    }
 
     return Scaffold(
       backgroundColor: kAppBackgroundColor,
@@ -46,35 +65,7 @@ class ConfirmOTPScreen extends HookConsumerWidget {
                 ),
               ),
               const SizedBox(height: 110),
-              OtpTextField(
-                autoFocus: true,
-                numberOfFields: 4,
-                cursorColor: kPrimaryButtonColor,
-                borderColor: Colors.white,
-                enabledBorderColor: kPrimaryTextFieldBorderColor,
-                focusedBorderColor: kTextFeildFillColor,
-                fieldWidth: 60,
-                styles: const [
-                  TextStyle(color: kPrimaryTextColor, fontWeight: FontWeight.bold, fontSize: 25),
-                  TextStyle(color: kPrimaryTextColor, fontWeight: FontWeight.bold, fontSize: 25),
-                  TextStyle(color: kPrimaryTextColor, fontWeight: FontWeight.bold, fontSize: 25),
-                  TextStyle(color: kPrimaryTextColor, fontWeight: FontWeight.bold, fontSize: 25),
-                ],
-
-                filled: true,
-                fillColor: kTextFeildFillColor,
-                showFieldAsBox: true,
-                onCodeChanged: (String code) {},
-                onSubmit: (String verificationCode) {
-                  dev.log(verificationCode);
-                  if (verificationCode == "0000") {
-                    goToHomeScreen();
-                  } else {
-                    // TODO: Alert Dialog
-                    dev.log('wrong otp');
-                  }
-                }, // end onSubmit
-              ),
+              CustomOtpTextField(onSubmit: loginOrSignUp),
               const SizedBox(height: 110),
               const Text(
                 'Didn\'t get the code?',

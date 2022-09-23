@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quiz_u/constants.dart';
+import 'package:quiz_u/controllers/providers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends HookConsumerWidget {
@@ -8,7 +9,7 @@ class HomeScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    void gotoLoginScreen() => Navigator.of(context).pushReplacementNamed(kLoginScreenRoute);
+    void gotoAuthWrapper() => Navigator.of(context).pushNamedAndRemoveUntil(kAuthWrapperRoute, ((route) => false));
 
     void gotoProfileScreen() => Navigator.of(context).pushNamed(kProfileScreenRoute);
 
@@ -16,7 +17,8 @@ class HomeScreen extends HookConsumerWidget {
       // remove the token
       final prefs = await SharedPreferences.getInstance();
       prefs.remove('token');
-      gotoLoginScreen();
+      ref.refresh(isTokenValidProvider);
+      gotoAuthWrapper();
     }
 
     return Scaffold(
@@ -27,9 +29,7 @@ class HomeScreen extends HookConsumerWidget {
             const Text('Logged In'),
             const SizedBox(height: 20),
             TextButton(
-              onPressed: () async {
-                gotoProfileScreen();
-              },
+              onPressed: gotoProfileScreen,
               style: TextButton.styleFrom(backgroundColor: const Color(0xFF5B61FE)),
               child: const Text('Goto profile screen', style: TextStyle(color: Colors.white)),
             ),

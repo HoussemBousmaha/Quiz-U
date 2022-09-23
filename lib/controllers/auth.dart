@@ -2,7 +2,6 @@ import 'dart:developer' as dev;
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:phone_number/phone_number.dart';
 import 'package:quiz_u/constants.dart';
 import 'package:quiz_u/controllers/providers.dart';
 import 'package:quiz_u/controllers/utils.dart';
@@ -15,53 +14,39 @@ class Auth {
   const Auth(this.ref);
   final StateProviderRef ref;
 
+  Future<void> dos() async {}
+
   Future<AuthState?> loginOrSignUp({required String mobileNumber, String otp = otp}) async {
-    final phoneNumberUtil = PhoneNumberUtil();
-
     try {
-      bool isMobileNumberValid = await phoneNumberUtil.validate(mobileNumber);
+      // http
+      final body = '{ "OTP":"$otp", "mobile":"$mobileNumber" }';
+      final responce = await dio.post(kLoginUrl, data: body);
+      final data = responce.data;
 
-      if (isMobileNumberValid) {
-        ref.read(isLoadingProvider.notifier).state = true;
+      // set token to local storage and to the provider
+      final prefs = await SharedPreferences.getInstance();
+      final token = data['token'];
+      prefs.setString('token', token);
+      ref.watch(tokenProvider.notifier).state = token;
 
-        // http
-        final body = '{ "OTP":"$otp", "mobile":"$mobileNumber" }';
-        final responce = await dio.post(kLoginUrl, data: body);
-        final data = responce.data;
-
-        // set token to local storage and to the provider
-        final prefs = await SharedPreferences.getInstance();
-        final token = data['token'];
-        prefs.setString('token', token);
-        ref.watch(tokenProvider.notifier).state = token;
-
-        ref.read(isLoadingProvider.notifier).state = false;
-
-        if (data['user_status'] != null) {
-          return AuthState.signedUp;
-        } else {
-          final user = User(name: data['name'], mobile: data['mobile'], token: token);
-
-          // add to firestore
-          ref.read(databaseProvider).addUser(user);
-          return AuthState.loggedIn;
-        }
+      if (data['user_status'] != null) {
+        return AuthState.signedUp;
       } else {
-        dev.log('Unvalid Mobile Number');
+        // add to firestore
+        final user = User(name: data['name'], mobile: data['mobile'], token: token);
+        ref.read(databaseProvider).addUser(user);
 
-        return null;
+        return AuthState.loggedIn;
       }
     } catch (err) {
       dev.log('this is the error : $err');
-      ref.read(isLoadingProvider.notifier).state = false;
+
       return null;
     }
   }
 
   Future<bool> updateUserNameAndAddUser({required String token, required String userName}) async {
     try {
-      ref.read(isLoadingProvider.notifier).state = true;
-
       final body = '{ "OTP":"$otp", "name":"$userName" }';
 
       final responce = await dio.post(
@@ -81,13 +66,9 @@ class Auth {
       // add to firestore
       ref.read(databaseProvider).addUser(user);
 
-      ref.read(isLoadingProvider.notifier).state = false;
-
       return responce.data['success'];
     } catch (err) {
       dev.log('$err');
-
-      ref.read(isLoadingProvider.notifier).state = false;
 
       return false;
     }
@@ -95,8 +76,6 @@ class Auth {
 
   Future<Map?> fetchUserInfo() async {
     try {
-      ref.read(isLoadingProvider.notifier).state = true;
-
       final token = ref.watch(tokenProvider);
 
       final responce = await dio.get(
@@ -104,15 +83,9 @@ class Auth {
         options: Options(headers: {HttpHeaders.authorizationHeader: token}),
       );
 
-      await Future.delayed(const Duration(milliseconds: 300));
-
-      ref.read(isLoadingProvider.notifier).state = false;
-
       return responce.data;
     } catch (err) {
       dev.log('$err');
-
-      ref.read(isLoadingProvider.notifier).state = false;
 
       return null;
     }
@@ -120,21 +93,19 @@ class Auth {
 
   Future<bool> verifyTokenOnAppLunch() async {
     try {
-      ref.read(isLoadingProvider.notifier).state = true;
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
 
       if (token == null) {
-        ref.read(isLoadingProvider.notifier).state = false;
         return false;
       }
 
       final responce = await dio.get(kAuthTokenUrl, options: Options(headers: {HttpHeaders.authorizationHeader: token}));
-      ref.read(isLoadingProvider.notifier).state = false;
+
       return responce.data['success'];
     } catch (err) {
       dev.log('$err');
-      ref.read(isLoadingProvider.notifier).state = false;
+
       return false;
     }
   }

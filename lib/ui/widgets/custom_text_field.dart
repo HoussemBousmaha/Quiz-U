@@ -14,6 +14,7 @@ class CustomTextField extends StatelessWidget {
     this.suffixIcon,
     this.onTap,
     this.focus,
+    this.align = TextAlign.start,
   }) : super(key: key);
 
   final TextEditingController? controller;
@@ -25,7 +26,7 @@ class CustomTextField extends StatelessWidget {
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final FocusNode? focus;
-
+  final TextAlign align;
   final VoidCallback? onTap;
 
   @override
@@ -38,6 +39,7 @@ class CustomTextField extends StatelessWidget {
         keyboardType: keyBoardType,
         controller: controller,
         style: style,
+        textAlign: align,
         maxLines: 1,
         textInputAction: TextInputAction.done,
         decoration: InputDecoration(

@@ -15,6 +15,8 @@ const kLoginScreenRoute = '/login-screen/';
 const kUserNameScreenRoute = '/userName-screen/';
 const kProfileScreenRoute = '/profile-screen/';
 const kConfirmOtpScreenRoute = '/confirm-otp-screen/';
+const kAuthWrapperRoute = '/auth-wrapper/';
+const kHomeWrapperRoute = '/home-wrapper/';
 
 const kAppBackgroundColor = Color(0xFFEFF6FE);
 
@@ -45,3 +47,5 @@ final kPrimaryTextStyle = TextStyle(
   color: Colors.white,
   fontFamily: GoogleFonts.lato().fontFamily,
 );
+
+const kDefaultDuration = 600;
