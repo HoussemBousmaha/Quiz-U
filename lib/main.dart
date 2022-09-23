@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:quiz/constants.dart';
-import 'package:quiz/controllers/providers.dart';
-import 'package:quiz/controllers/utils.dart';
-import 'package:quiz/ui/screens/home_screen.dart';
-import 'package:quiz/ui/screens/login_screen.dart';
-import 'package:quiz/ui/screens/user_name_screen.dart';
+import 'package:quiz_u/constants.dart';
+import 'package:quiz_u/controllers/providers.dart';
+import 'package:quiz_u/controllers/utils.dart';
+import 'package:quiz_u/ui/screens/home_screen.dart';
+import 'package:quiz_u/ui/screens/login_screen.dart';
+import 'package:quiz_u/ui/screens/user_name_screen.dart';
 
 void main() async {
   runApp(const ProviderScope(child: QuizApp()));

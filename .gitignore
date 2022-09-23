@@ -36,6 +36,7 @@ ios/
 pubspec.*
 analysis_options.yaml
 .metadata
+lib/firebase_options.dart
 
 # Symbolication related
 app.*.symbols

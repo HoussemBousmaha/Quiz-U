@@ -3,9 +3,9 @@ import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:quiz/constants.dart';
-import 'package:quiz/controllers/providers.dart';
-import 'package:quiz/ui/widgets/loading_indicator.dart';
+import 'package:quiz_u/constants.dart';
+import 'package:quiz_u/controllers/providers.dart';
+import 'package:quiz_u/ui/widgets/loading_indicator.dart';
 
 class UserNameScreen extends HookConsumerWidget {
   const UserNameScreen({super.key});

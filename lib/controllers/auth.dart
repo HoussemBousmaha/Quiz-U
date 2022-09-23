@@ -4,9 +4,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phone_number/phone_number.dart';
-import 'package:quiz/constants.dart';
-import 'package:quiz/controllers/providers.dart';
-import 'package:quiz/controllers/utils.dart';
+import 'package:quiz_u/constants.dart';
+import 'package:quiz_u/controllers/providers.dart';
+import 'package:quiz_u/controllers/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final dio = Dio();

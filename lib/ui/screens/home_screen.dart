@@ -2,8 +2,8 @@ import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quiz/constants.dart';
-import 'package:quiz/controllers/providers.dart';
+import 'package:quiz_u/constants.dart';
+import 'package:quiz_u/controllers/providers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends HookWidget {
