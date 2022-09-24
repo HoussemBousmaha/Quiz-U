@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -13,39 +11,36 @@ class CustomTimer extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller = useAnimationController(duration: const Duration(seconds: kDefaultQuizTime));
+    final controller = useAnimationController(duration: Duration(seconds: kDefaultQuizTime.toInt()));
     final angleAnimation = Tween<double>(begin: 0, end: math.pi * 2).animate(controller);
     final timeAnimation = Tween<double>(begin: kDefaultQuizTime.toDouble(), end: 0).animate(controller);
 
-    final angleNotifier = useState<double>(0.0);
-    final timeNotifier = useState<double>(kDefaultQuizTime.toDouble());
     final isQuizStarted = ref.watch(isQuizStartedProvider);
 
     useEffect(() {
       if (isQuizStarted) {
         controller.forward();
         angleAnimation.addListener(() {
-          // print('${angleAnimation.value}');
-          angleNotifier.value = angleAnimation.value;
+          ref.read(angleProvider.notifier).state = angleAnimation.value;
         });
         timeAnimation.addListener(() {
           // print('${timeAnimation.value}');
-          timeNotifier.value = timeAnimation.value;
+          ref.read(timeProvider.notifier).state = timeAnimation.value;
         });
       } else {
         controller.stop();
       }
 
       return null;
-    }, [isQuizStarted, controller.value]);
+    }, [isQuizStarted]);
 
     return CustomPaint(
-      painter: TimerPainter(angleNotifier.value),
+      painter: TimerPainter(ref.watch(angleProvider)),
       child: Container(
-        height: 200,
-        width: 200,
+        height: 100,
+        width: 100,
         alignment: Alignment.center,
-        child: Text(intToTimeLeft(timeNotifier.value.toInt())),
+        child: Text(intToTimeLeft(ref.watch(timeProvider).toInt())),
       ),
     );
   }

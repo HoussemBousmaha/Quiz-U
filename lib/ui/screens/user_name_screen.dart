@@ -1,5 +1,3 @@
-import 'dart:developer' as dev;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -19,13 +17,12 @@ class UserNameScreen extends HookConsumerWidget {
     void gotoAuthWrapper() => Navigator.of(context).pushNamedAndRemoveUntil(kAuthWrapperRoute, ((route) => false));
 
     void updateUserName() async {
-      final token = ref.watch(tokenProvider);
       final userName = nameController.text.trim();
 
       final isUserNameValid = validateUserName(userName);
 
       if (isUserNameValid) {
-        final success = await ref.watch(authProvider).updateUserNameAndAddUser(token: token, userName: userName);
+        final success = await ref.watch(authProvider).updateUserName(userName: userName);
 
         if (success) {
           ref.refresh(isTokenValidProvider);

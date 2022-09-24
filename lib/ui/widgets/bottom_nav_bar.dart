@@ -30,19 +30,19 @@ class BottomNavBar extends HookConsumerWidget {
             onTap: () {
               ref.read(screenIndexProvider.notifier).state = 0;
             },
-            child: const Icon(Icons.home_outlined, color: kActiveIconColor, size: 30),
+            child: Icon(Icons.home_outlined, color: ref.watch(screenIndexProvider) == 0 ? kActiveIconColor : kInactiveIconColor, size: 30),
           ),
           GestureDetector(
             onTap: () {
               ref.read(screenIndexProvider.notifier).state = 1;
             },
-            child: const Icon(Icons.leaderboard_outlined, color: kInactiveIconColor, size: 30),
+            child: Icon(Icons.leaderboard_outlined, color: ref.watch(screenIndexProvider) == 1 ? kActiveIconColor : kInactiveIconColor, size: 30),
           ),
           GestureDetector(
             onTap: () {
               ref.read(screenIndexProvider.notifier).state = 2;
             },
-            child: const Icon(Icons.person_outlined, color: kInactiveIconColor, size: 30),
+            child: Icon(Icons.person_outlined, color: ref.watch(screenIndexProvider) == 2 ? kActiveIconColor : kInactiveIconColor, size: 30),
           ),
         ],
       ),

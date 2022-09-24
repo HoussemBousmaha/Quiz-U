@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,7 +18,7 @@ class Auth {
     try {
       // http
       final body = '{ "OTP":"$otp", "mobile":"$mobileNumber" }';
-      final responce = await ref.read(dioProvider).post(kLoginUrl, data: body);
+      final responce = await ref.read(dioClientProvider).post(kLoginUrl, data: body);
       final data = responce.data;
 
       // set token to local storage and to the provider
@@ -40,11 +42,14 @@ class Auth {
     }
   }
 
-  Future<bool> updateUserNameAndAddUser({required String token, required String userName}) async {
+  Future<bool> updateUserName({required String userName}) async {
     try {
+      final token = ref.watch(tokenProvider);
       final body = '{ "OTP":"$otp", "name":"$userName" }';
 
-      final responce = await ref.read(dioProvider).post(
+      if (token.isEmpty) return false;
+
+      final responce = await ref.read(dioClientProvider).post(
             kUserNameUrl,
             data: body,
             options: Options(headers: {HttpHeaders.authorizationHeader: token}),
@@ -53,11 +58,8 @@ class Auth {
       final data = responce.data;
 
       // create the user object
-      final user = User(
-        name: userName,
-        mobile: data['mobile'],
-        token: token,
-      );
+      final user = User(name: userName, mobile: data['mobile'], token: token);
+
       // add to firestore
       ref.read(databaseProvider).addUser(user);
 
@@ -68,16 +70,19 @@ class Auth {
     }
   }
 
-  Future<Map?> fetchUserInfo() async {
+  Future<Map<String, dynamic>?> fetchUserInfo() async {
     try {
       final token = ref.watch(tokenProvider);
+      if (token.isEmpty) return null;
 
-      final responce = await ref.read(dioProvider).get(
+      final responce = await ref.read(dioClientProvider).get(
             kUserInfoUrl,
             options: Options(headers: {HttpHeaders.authorizationHeader: token}),
           );
 
-      return responce.data;
+      final data = responce.data;
+
+      return data;
     } catch (err) {
       print('$err');
       return null;
@@ -89,11 +94,9 @@ class Auth {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
 
-      if (token == null) {
-        return false;
-      }
+      if (token == null) return false;
 
-      final responce = await ref.read(dioProvider).get(kAuthTokenUrl, options: Options(headers: {HttpHeaders.authorizationHeader: token}));
+      final responce = await ref.read(dioClientProvider).get(kAuthTokenUrl, options: Options(headers: {HttpHeaders.authorizationHeader: token}));
       ref.read(tokenProvider.notifier).state = token;
 
       return responce.data['success'];

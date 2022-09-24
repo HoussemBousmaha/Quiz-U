@@ -52,4 +52,4 @@ final kPrimaryTextStyle = TextStyle(
 
 const kDefaultDuration = 600;
 
-const kDefaultQuizTime = 120;
+const kDefaultQuizTime = 120.0;

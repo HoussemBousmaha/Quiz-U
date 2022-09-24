@@ -11,6 +11,7 @@ import 'package:quiz_u/ui/screens/home_screen.dart';
 import 'package:quiz_u/ui/screens/home_wrapper.dart';
 import 'package:quiz_u/ui/screens/login_screen.dart';
 import 'package:quiz_u/ui/screens/profile_screen.dart';
+import 'package:quiz_u/ui/screens/quiz_screen.dart';
 import 'package:quiz_u/ui/screens/user_name_screen.dart';
 
 void main() async {
@@ -39,6 +40,7 @@ class QuizApp extends HookConsumerWidget {
         kConfirmOtpScreenRoute: (context) => const ConfirmOTPScreen(),
         kAuthWrapperRoute: (context) => const AuthWrapper(),
         kHomeWrapperRoute: (context) => const HomeWrapper(),
+        kQuizScreenRoute: (context) => const QuizScreen(),
       },
     );
   }

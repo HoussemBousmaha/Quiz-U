@@ -6,16 +6,12 @@ import 'package:quiz_u/constants.dart';
 import 'package:quiz_u/controllers/auth.dart';
 import 'package:quiz_u/controllers/database.dart';
 
-final authStateProvider = StateProvider.autoDispose<bool>(
-  (ref) => false,
-);
-
 final authProvider = StateProvider.autoDispose<Auth>(
   (ref) => Auth(ref),
 );
 
 final tokenProvider = StateProvider<String>(
-  (ref) => "",
+  (ref) => '',
 );
 
 final databaseProvider = Provider.autoDispose<DatabaseHelper>(
@@ -26,13 +22,13 @@ final mobileNumberProvider = StateProvider<String>(
   (ref) => '',
 );
 
-final isTokenValidProvider = FutureProvider.autoDispose<bool>((ref) async {
+final isTokenValidProvider = FutureProvider<bool>((ref) async {
   final isTokenValid = await ref.read(authProvider).verifyTokenOnAppLunch();
 
   return isTokenValid;
 });
 
-final loadUserInfoProvider = FutureProvider.autoDispose<Map?>((ref) async {
+final loadUserInfoProvider = FutureProvider<Map<String, dynamic>?>((ref) async {
   final data = await ref.read(authProvider).fetchUserInfo();
 
   return data;
@@ -40,7 +36,7 @@ final loadUserInfoProvider = FutureProvider.autoDispose<Map?>((ref) async {
 
 final fetchQuestionsProvider = FutureProvider.autoDispose<List>((ref) async {
   final token = ref.watch(tokenProvider);
-  final responce = await ref.read(dioProvider).get(kQuestionUrl, options: Options(headers: {HttpHeaders.authorizationHeader: token}));
+  final responce = await ref.read(dioClientProvider).get(kQuestionUrl, options: Options(headers: {HttpHeaders.authorizationHeader: token}));
   final data = responce.data;
   return data;
 });
@@ -53,4 +49,23 @@ final isQuizStartedProvider = StateProvider(
   (ref) => false,
 );
 
-final dioProvider = Provider.autoDispose((ref) => Dio());
+final dioClientProvider = Provider((ref) => Dio());
+
+final isCorrectAnswersListProvider = StateProvider.autoDispose((ref) {
+  return [false, false, false, false];
+});
+
+final isAnswerSubmittedProvider = StateProvider.autoDispose((ref) {
+  return [false, false, false, false];
+});
+
+final questionIndexProvider = StateProvider.autoDispose<int>(
+  (ref) => 0,
+);
+
+final angleProvider = StateProvider.autoDispose<double>(
+  (ref) => 0.0,
+);
+final timeProvider = StateProvider.autoDispose<double>(
+  (ref) => kDefaultQuizTime.toDouble(),
+);
