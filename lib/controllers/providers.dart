@@ -1,7 +1,10 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quiz_u/constants.dart';
 import 'package:quiz_u/controllers/auth.dart';
 import 'package:quiz_u/controllers/database.dart';
-import 'package:quiz_u/controllers/utils.dart';
 
 final authStateProvider = StateProvider.autoDispose<bool>(
   (ref) => false,
@@ -15,10 +18,6 @@ final tokenProvider = StateProvider<String>(
   (ref) => "",
 );
 
-final isLoadingProvider = StateProvider<bool>(
-  (ref) => true,
-);
-
 final databaseProvider = Provider.autoDispose<DatabaseHelper>(
   (ref) => DatabaseHelper(),
 );
@@ -29,17 +28,29 @@ final mobileNumberProvider = StateProvider<String>(
 
 final isTokenValidProvider = FutureProvider.autoDispose<bool>((ref) async {
   final isTokenValid = await ref.read(authProvider).verifyTokenOnAppLunch();
-  await Future.delayed(const Duration(milliseconds: 800));
+
   return isTokenValid;
 });
 
-final loadUserInfoProvider = FutureProvider<Map?>((ref) async {
+final loadUserInfoProvider = FutureProvider.autoDispose<Map?>((ref) async {
   final data = await ref.read(authProvider).fetchUserInfo();
+
   return data;
 });
-final logUserInProvider = FutureProvider.autoDispose<AuthState?>((ref) async {
-  final mobileNumber = ref.watch(mobileNumberProvider);
 
-  final signUpOrLogin = await ref.read(authProvider).loginOrSignUp(mobileNumber: mobileNumber);
-  return signUpOrLogin;
+final fetchQuestionsProvider = FutureProvider.autoDispose<List>((ref) async {
+  final token = ref.watch(tokenProvider);
+  final responce = await ref.read(dioProvider).get(kQuestionUrl, options: Options(headers: {HttpHeaders.authorizationHeader: token}));
+  final data = responce.data;
+  return data;
 });
+
+final screenIndexProvider = StateProvider.autoDispose<int>((ref) {
+  return 0;
+});
+
+final isQuizStartedProvider = StateProvider(
+  (ref) => false,
+);
+
+final dioProvider = Provider.autoDispose((ref) => Dio());

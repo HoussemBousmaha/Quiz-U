@@ -1,14 +1,10 @@
-import 'dart:developer' as dev;
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quiz_u/constants.dart';
 import 'package:quiz_u/controllers/providers.dart';
-import 'package:quiz_u/controllers/utils.dart';
 import 'package:quiz_u/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-final dio = Dio();
 
 class Auth {
   const Auth(this.ref);
@@ -16,11 +12,11 @@ class Auth {
 
   Future<void> dos() async {}
 
-  Future<AuthState?> loginOrSignUp({required String mobileNumber, String otp = otp}) async {
+  Future<bool?> login({required String mobileNumber, String otp = otp}) async {
     try {
       // http
       final body = '{ "OTP":"$otp", "mobile":"$mobileNumber" }';
-      final responce = await dio.post(kLoginUrl, data: body);
+      final responce = await ref.read(dioProvider).post(kLoginUrl, data: body);
       final data = responce.data;
 
       // set token to local storage and to the provider
@@ -30,17 +26,16 @@ class Auth {
       ref.watch(tokenProvider.notifier).state = token;
 
       if (data['user_status'] != null) {
-        return AuthState.signedUp;
+        return true;
       } else {
         // add to firestore
         final user = User(name: data['name'], mobile: data['mobile'], token: token);
         ref.read(databaseProvider).addUser(user);
 
-        return AuthState.loggedIn;
+        return false;
       }
     } catch (err) {
-      dev.log('this is the error : $err');
-
+      print('this is the error : $err');
       return null;
     }
   }
@@ -49,11 +44,11 @@ class Auth {
     try {
       final body = '{ "OTP":"$otp", "name":"$userName" }';
 
-      final responce = await dio.post(
-        kUserNameUrl,
-        data: body,
-        options: Options(headers: {HttpHeaders.authorizationHeader: token}),
-      );
+      final responce = await ref.read(dioProvider).post(
+            kUserNameUrl,
+            data: body,
+            options: Options(headers: {HttpHeaders.authorizationHeader: token}),
+          );
 
       final data = responce.data;
 
@@ -68,8 +63,7 @@ class Auth {
 
       return responce.data['success'];
     } catch (err) {
-      dev.log('$err');
-
+      print('$err');
       return false;
     }
   }
@@ -78,15 +72,14 @@ class Auth {
     try {
       final token = ref.watch(tokenProvider);
 
-      final responce = await dio.get(
-        kUserInfoUrl,
-        options: Options(headers: {HttpHeaders.authorizationHeader: token}),
-      );
+      final responce = await ref.read(dioProvider).get(
+            kUserInfoUrl,
+            options: Options(headers: {HttpHeaders.authorizationHeader: token}),
+          );
 
       return responce.data;
     } catch (err) {
-      dev.log('$err');
-
+      print('$err');
       return null;
     }
   }
@@ -100,12 +93,12 @@ class Auth {
         return false;
       }
 
-      final responce = await dio.get(kAuthTokenUrl, options: Options(headers: {HttpHeaders.authorizationHeader: token}));
+      final responce = await ref.read(dioProvider).get(kAuthTokenUrl, options: Options(headers: {HttpHeaders.authorizationHeader: token}));
+      ref.read(tokenProvider.notifier).state = token;
 
       return responce.data['success'];
     } catch (err) {
-      dev.log('$err');
-
+      print('$err');
       return false;
     }
   }

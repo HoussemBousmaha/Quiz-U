@@ -82,7 +82,7 @@ class LoginScreen extends HookConsumerWidget {
                 if (isMobileNumberValid) {
                   goToConfirmOtpScreen();
                 } else {
-                  dev.log('MobileNumberNotValid');
+                  print('MobileNumberNotValid');
                 }
               },
             ),

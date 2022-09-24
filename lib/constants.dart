@@ -7,6 +7,7 @@ const kLoginUrl = "https://quizu.okoul.com/Login";
 const kAuthTokenUrl = "https://quizu.okoul.com/Token";
 const kUserNameUrl = "https://quizu.okoul.com/Name";
 const kUserInfoUrl = "https://quizu.okoul.com/UserInfo";
+const kQuestionUrl = "https://quizu.okoul.com/Questions";
 
 const countryPicker = FlCountryCodePicker();
 
@@ -17,6 +18,7 @@ const kProfileScreenRoute = '/profile-screen/';
 const kConfirmOtpScreenRoute = '/confirm-otp-screen/';
 const kAuthWrapperRoute = '/auth-wrapper/';
 const kHomeWrapperRoute = '/home-wrapper/';
+const kQuizScreenRoute = '/quiz-screen/';
 
 const kAppBackgroundColor = Color(0xFFEFF6FE);
 
@@ -49,3 +51,5 @@ final kPrimaryTextStyle = TextStyle(
 );
 
 const kDefaultDuration = 600;
+
+const kDefaultQuizTime = 120;

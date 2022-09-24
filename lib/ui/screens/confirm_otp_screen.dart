@@ -5,7 +5,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quiz_u/constants.dart';
 import 'package:quiz_u/controllers/providers.dart';
-import 'package:quiz_u/controllers/utils.dart';
 import 'package:quiz_u/ui/widgets/code_sent_card.dart';
 import 'package:quiz_u/ui/widgets/custom_button.dart';
 import 'package:quiz_u/ui/widgets/custom_otp_text_field.dart';
@@ -23,15 +22,18 @@ class ConfirmOTPScreen extends HookConsumerWidget {
     void loginOrSignUp(String otp) async {
       final mobileNumber = ref.watch(mobileNumberProvider);
 
-      final signUpOrLogin = await ref.read(authProvider).loginOrSignUp(mobileNumber: mobileNumber);
+      final isNewUser = await ref.read(authProvider).login(mobileNumber: mobileNumber);
 
-      if (signUpOrLogin == AuthState.loggedIn) {
-        ref.refresh(isTokenValidProvider);
-        goToAuthWrapper();
-      } else if (signUpOrLogin == AuthState.signedUp) {
+      if (isNewUser == true) {
         goToUserNameScreen();
+      } else if (isNewUser == false) {
+        // not new user
+        // refresh the token
+        ref.refresh(isTokenValidProvider);
+        // go to home screen because token must be valid
+        goToAuthWrapper();
       } else {
-        dev.log('There were a problem');
+        print('there is an error');
       }
     }
 
@@ -75,9 +77,7 @@ class ConfirmOTPScreen extends HookConsumerWidget {
               CustomButton(
                 "Resend",
                 width: size.width * .4,
-                onPressed: () {
-                  // TODO: Implement SMS Sending to send OTP
-                },
+                onPressed: () {},
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,

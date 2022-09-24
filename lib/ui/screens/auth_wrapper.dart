@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quiz_u/controllers/providers.dart';
@@ -15,10 +13,7 @@ class AuthWrapper extends HookConsumerWidget {
     final isTokenValidFuture = ref.watch(isTokenValidProvider);
 
     return isTokenValidFuture.when(
-      data: (isTokenValid) {
-        log(isTokenValid.toString());
-        return isTokenValid ? const HomeWrapper() : const LoginScreen();
-      },
+      data: (isTokenValid) => isTokenValid ? const HomeWrapper() : const LoginScreen(),
       error: (err, stack) => Scaffold(body: Center(child: Text('$err $stack'))),
       loading: () => const CustomLoadingIndicator(),
     );

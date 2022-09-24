@@ -32,7 +32,7 @@ class UserNameScreen extends HookConsumerWidget {
           gotoAuthWrapper();
         }
       } else {
-        dev.log('user name is not valid');
+        print('user name is not valid');
       }
     }
 
