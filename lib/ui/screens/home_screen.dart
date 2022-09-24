@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quiz_u/constants.dart';
 import 'package:quiz_u/ui/widgets/custom_button.dart';
-import 'package:quiz_u/ui/widgets/logo.dart';
 
 class HomeScreen extends HookConsumerWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -39,9 +38,10 @@ class HomeScreen extends HookConsumerWidget {
         children: [
           Center(
             child: Column(
-              mainAxisSize: MainAxisSize.min,
               children: [
-                const SizedBox(height: 100),
+                const SizedBox(height: 140),
+                Text('QuizU', style: kHeadLineTextStyle),
+                const SizedBox(height: 140),
                 firstDescriptiveHeader,
                 const SizedBox(height: 50),
                 CustomButton(
@@ -56,7 +56,6 @@ class HomeScreen extends HookConsumerWidget {
               ],
             ),
           ),
-          const Logo(),
         ],
       ),
     );

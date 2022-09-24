@@ -3,8 +3,10 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:quiz_u/constants.dart';
 import 'package:quiz_u/controllers/providers.dart';
+import 'package:quiz_u/models/score.dart';
 import 'package:quiz_u/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -89,6 +91,42 @@ class Auth {
     }
   }
 
+  Future<List<dynamic>?> fetchTopScores() async {
+    try {
+      final token = ref.watch(tokenProvider);
+      if (token.isEmpty) return null;
+
+      final responce = await ref.read(dioClientProvider).get(
+            kTopScoresUrl,
+            options: Options(headers: {HttpHeaders.authorizationHeader: token}),
+          );
+      final scores = responce.data;
+
+      return scores;
+    } catch (err) {
+      print(err);
+      return null;
+    }
+  }
+
+  Future<List?> fetchQuestions() async {
+    try {
+      final token = ref.watch(tokenProvider);
+      if (token.isEmpty) return null;
+
+      final responce = await ref.read(dioClientProvider).get(
+            kQuestionUrl,
+            options: Options(headers: {HttpHeaders.authorizationHeader: token}),
+          );
+      final questions = responce.data;
+
+      return questions;
+    } catch (err) {
+      print(err);
+      return null;
+    }
+  }
+
   Future<bool> verifyTokenOnAppLunch() async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -103,6 +141,60 @@ class Auth {
     } catch (err) {
       print('$err');
       return false;
+    }
+  }
+
+  Future<List<Score>?> saveUserScore(int score) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final token = ref.watch(tokenProvider);
+
+      if (token.isEmpty) return null;
+
+      final now = DateFormat('hh:mm aaa dd/MM/yyyy').format(DateTime.now());
+
+      // set score to local storage
+      final previousScores = prefs.getStringList('scores');
+      final previousScoresTimes = prefs.getStringList('scoresTime');
+
+      if (previousScores == null) {
+        prefs.setStringList('scores', ['$score']);
+      } else {
+        prefs.setStringList('scores', [...previousScores, '$score']);
+      }
+
+      if (previousScoresTimes == null) {
+        prefs.setStringList('scoresTime', [now]);
+      } else {
+        prefs.setStringList('scoresTime', [...previousScoresTimes, now]);
+      }
+
+      List<Score> scores = [];
+
+      if (previousScores == null && previousScoresTimes == null) {
+        scores = [Score(score: score, timeSaved: now)];
+      } else {
+        scores = List.generate(
+          previousScores!.length,
+          (index) => Score(
+            score: int.parse(previousScores[index]),
+            timeSaved: previousScoresTimes![index],
+          ),
+        );
+      }
+
+      final body = '{ "score": $score }';
+
+      await ref.read(dioClientProvider).post(
+            kSaveUserScoreUrl,
+            data: body,
+            options: Options(headers: {HttpHeaders.authorizationHeader: token}),
+          );
+
+      return scores;
+    } catch (err) {
+      print(err);
+      return null;
     }
   }
 }

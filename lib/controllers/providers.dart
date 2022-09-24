@@ -1,10 +1,10 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quiz_u/constants.dart';
 import 'package:quiz_u/controllers/auth.dart';
 import 'package:quiz_u/controllers/database.dart';
+import 'package:quiz_u/models/score.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final authProvider = StateProvider.autoDispose<Auth>(
   (ref) => Auth(ref),
@@ -13,6 +13,27 @@ final authProvider = StateProvider.autoDispose<Auth>(
 final tokenProvider = StateProvider<String>(
   (ref) => '',
 );
+
+final userScoresProvider = FutureProvider.autoDispose<List<Score>>((ref) async {
+  final prefs = await SharedPreferences.getInstance();
+  final previousScores = prefs.getStringList('scores');
+  final previousScoresTimes = prefs.getStringList('scoresTime');
+
+  if (previousScores == null || previousScoresTimes == null) return [];
+
+  List<Score> scores = List.generate(
+    previousScores.length,
+    (index) => Score(
+      score: int.parse(previousScores[index]),
+      timeSaved: previousScoresTimes[index],
+    ),
+  );
+
+  scores.sort((a, b) => a.score.compareTo(b.score));
+  await Future.delayed(const Duration(seconds: 1));
+
+  return scores;
+});
 
 final databaseProvider = Provider.autoDispose<DatabaseHelper>(
   (ref) => DatabaseHelper(),
@@ -28,17 +49,21 @@ final isTokenValidProvider = FutureProvider<bool>((ref) async {
   return isTokenValid;
 });
 
-final loadUserInfoProvider = FutureProvider<Map<String, dynamic>?>((ref) async {
-  final data = await ref.read(authProvider).fetchUserInfo();
+final loadUserInfoProvider = FutureProvider.autoDispose<Map<String, dynamic>?>((ref) async {
+  final userInfo = await ref.read(authProvider).fetchUserInfo();
 
-  return data;
+  return userInfo;
 });
 
-final fetchQuestionsProvider = FutureProvider.autoDispose<List>((ref) async {
-  final token = ref.watch(tokenProvider);
-  final responce = await ref.read(dioClientProvider).get(kQuestionUrl, options: Options(headers: {HttpHeaders.authorizationHeader: token}));
-  final data = responce.data;
-  return data;
+final topScoresProvider = FutureProvider.autoDispose<List<dynamic>?>((ref) async {
+  final topScores = await ref.read(authProvider).fetchTopScores();
+
+  return topScores;
+});
+
+final fetchQuestionsProvider = FutureProvider.autoDispose<List?>((ref) async {
+  final questions = await ref.read(authProvider).fetchQuestions();
+  return questions;
 });
 
 final screenIndexProvider = StateProvider.autoDispose<int>((ref) {

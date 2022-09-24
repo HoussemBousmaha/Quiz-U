@@ -28,6 +28,7 @@ class QuizApp extends HookConsumerWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        scaffoldBackgroundColor: kAppBackgroundColor,
         fontFamily: GoogleFonts.lato().fontFamily,
         inputDecorationTheme: const InputDecorationTheme(focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: kTextFeildFillColor, width: 2))),
       ),

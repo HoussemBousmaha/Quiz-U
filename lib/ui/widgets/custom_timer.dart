@@ -17,15 +17,60 @@ class CustomTimer extends HookConsumerWidget {
 
     final isQuizStarted = ref.watch(isQuizStartedProvider);
 
-    useEffect(() {
+    Future<void> showTimeIsUpDialog() async {
+      if (ref.watch(timeProvider) <= 0) {
+        await showDialog(
+          context: context,
+          builder: ((context) {
+            return AlertDialog(
+              backgroundColor: kAppBackgroundColor,
+              title: const Center(
+                child: Text(
+                  'Time Is Up!!',
+                  style: TextStyle(color: kPrimaryTextColor),
+                ),
+              ),
+              content: Container(
+                alignment: Alignment.center,
+                height: 40,
+                child: Text(
+                  'Your Scored ${ref.watch(questionIndexProvider)}',
+                  style: const TextStyle(color: kPrimaryTextColor).copyWith(fontSize: 15),
+                ),
+              ),
+              actions: [
+                Center(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(backgroundColor: kPrimaryButtonColor),
+                    onPressed: () async {
+                      Navigator.of(context).pushNamedAndRemoveUntil(kAuthWrapperRoute, ((route) => false));
+
+                      await ref.read(authProvider).saveUserScore(ref.watch(questionIndexProvider));
+                    },
+                    child: const Text(
+                      'Try Again',
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }),
+        );
+      }
+    }
+
+    useAsyncEffect(() async {
       if (isQuizStarted) {
         controller.forward();
         angleAnimation.addListener(() {
           ref.read(angleProvider.notifier).state = angleAnimation.value;
         });
-        timeAnimation.addListener(() {
+        timeAnimation.addListener(() async {
           // print('${timeAnimation.value}');
           ref.read(timeProvider.notifier).state = timeAnimation.value;
+
+          await showTimeIsUpDialog();
         });
       } else {
         controller.stop();

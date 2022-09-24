@@ -54,9 +54,9 @@ class QuizScreen extends HookConsumerWidget {
                     const SizedBox(height: 100),
                     const CustomTimer(),
                     const SizedBox(height: 50),
-                    QuestionCard(question: questions[ref.watch(questionIndexProvider)]['Question'], questionNumber: ref.watch(questionIndexProvider)),
+                    QuestionCard(question: questions?[ref.watch(questionIndexProvider)]['Question'], questionNumber: ref.watch(questionIndexProvider)),
                     const SizedBox(height: 30),
-                    QuizAnswers(questions: questions),
+                    QuizAnswers(questions: questions ?? []),
                     const SizedBox(height: 30),
                     if (isSkipped.value == false)
                       FadeTransition(

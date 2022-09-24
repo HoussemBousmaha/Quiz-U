@@ -2,12 +2,16 @@ import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+const kGenderApiKey = "5AoKZBgFj8r5e93lVetQGBQbJ7t7gR9jsPKn";
+
 const otp = "0000";
 const kLoginUrl = "https://quizu.okoul.com/Login";
 const kAuthTokenUrl = "https://quizu.okoul.com/Token";
 const kUserNameUrl = "https://quizu.okoul.com/Name";
 const kUserInfoUrl = "https://quizu.okoul.com/UserInfo";
 const kQuestionUrl = "https://quizu.okoul.com/Questions";
+const kTopScoresUrl = "https://quizu.okoul.com/TopScores";
+const kSaveUserScoreUrl = "https://quizu.okoul.com/Score";
 
 const countryPicker = FlCountryCodePicker();
 
@@ -52,4 +56,4 @@ final kPrimaryTextStyle = TextStyle(
 
 const kDefaultDuration = 600;
 
-const kDefaultQuizTime = 120.0;
+const kDefaultQuizTime = 10.0;

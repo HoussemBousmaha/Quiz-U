@@ -34,12 +34,8 @@ class QuizAnswers extends HookConsumerWidget {
               Center(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(backgroundColor: kPrimaryButtonColor),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).pop();
-                    ref.refresh(questionIndexProvider);
-                    ref.refresh(angleProvider);
-                    ref.refresh(timeProvider);
+                  onPressed: () async {
+                    Navigator.of(context).pushNamedAndRemoveUntil(kAuthWrapperRoute, ((route) => false));
                   },
                   child: const Text(
                     'Try Again',
