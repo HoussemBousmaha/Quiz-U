@@ -70,7 +70,7 @@ final isQuizStartedProvider = StateProvider(
   (ref) => false,
 );
 
-final dioClientProvider = Provider((ref) => Dio());
+final dioClientProvider = Provider.autoDispose((ref) => Dio());
 
 final isCorrectAnswersListProvider = StateProvider.autoDispose((ref) {
   return [false, false, false, false];

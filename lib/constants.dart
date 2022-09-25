@@ -54,4 +54,4 @@ const kPrimaryTextStyle = TextStyle(color: Colors.white);
 
 const kDefaultDuration = 600;
 
-const kDefaultQuizTime = 2.0;
+const kDefaultQuizTime = 120.0;
