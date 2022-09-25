@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_u/constants.dart';
+import 'package:quiz_u/size_config.dart';
 
 class QuestionCard extends StatelessWidget {
   const QuestionCard({
@@ -14,19 +15,19 @@ class QuestionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 285,
-      width: 325,
+      height: SizeConfig.height(285),
+      width: SizeConfig.width(325),
       child: Stack(
         alignment: Alignment.center,
         fit: StackFit.expand,
         children: [
           Positioned(
-            top: 20,
-            bottom: 15,
+            top: SizeConfig.height(20),
+            bottom: SizeConfig.height(15),
             left: 0,
             right: 0,
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
+              padding: EdgeInsets.symmetric(horizontal: SizeConfig.width(40)),
               decoration: BoxDecoration(
                 color: kTextFeildFillColor,
                 borderRadius: BorderRadius.circular(12),
@@ -35,15 +36,19 @@ class QuestionCard extends StatelessWidget {
               child: Text(
                 question,
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: kPrimaryTextColor, fontWeight: FontWeight.bold, fontSize: 22),
+                style: TextStyle(
+                  color: kPrimaryTextColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: SizeConfig.width(22),
+                ),
               ),
             ),
           ),
           Positioned(
             top: 0,
             child: Container(
-              height: 35,
-              width: 115,
+              height: SizeConfig.height(35),
+              width: SizeConfig.width(115),
               decoration: BoxDecoration(
                 color: kAppBackgroundColor,
                 borderRadius: BorderRadius.circular(10),
@@ -52,17 +57,24 @@ class QuestionCard extends StatelessWidget {
               alignment: Alignment.center,
               child: Text(
                 'Question ${questionNumber + 1}',
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: kPrimaryTextColor),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: SizeConfig.width(12),
+                  color: kPrimaryTextColor,
+                ),
               ),
             ),
           ),
           Positioned(
             bottom: 0,
             child: Container(
-              height: 30,
-              width: 30,
+              height: SizeConfig.height(30),
+              width: SizeConfig.width(30),
               decoration: const BoxDecoration(color: kAppBackgroundColor, shape: BoxShape.circle),
-              child: const Icon(Icons.question_mark_rounded, size: 15),
+              child: Icon(
+                Icons.question_mark_rounded,
+                size: SizeConfig.height(15),
+              ),
             ),
           ),
         ],

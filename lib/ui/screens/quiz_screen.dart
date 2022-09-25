@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quiz_u/constants.dart';
 import 'package:quiz_u/controllers/providers.dart';
+import 'package:quiz_u/size_config.dart';
 import 'package:quiz_u/ui/widgets/custom_button.dart';
 import 'package:quiz_u/ui/widgets/custom_timer.dart';
 import 'package:quiz_u/ui/widgets/loading_indicator.dart';
@@ -13,6 +14,7 @@ class QuizScreen extends HookConsumerWidget {
   const QuizScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    SizeConfig.init(context);
     final questionsAsyncValue = ref.watch(fetchQuestionsProvider);
 
     final screenFadeController = useAnimationController(duration: const Duration(milliseconds: 300), initialValue: 1.0);
@@ -49,26 +51,31 @@ class QuizScreen extends HookConsumerWidget {
             child: SizedBox(
               width: double.infinity,
               child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
                 child: Column(
                   children: [
-                    const SizedBox(height: 100),
+                    SizeConfig.addVerticalSpace(100),
                     const CustomTimer(),
-                    const SizedBox(height: 50),
+                    SizeConfig.addVerticalSpace(50),
                     QuestionCard(question: questions?[ref.watch(questionIndexProvider)]['Question'], questionNumber: ref.watch(questionIndexProvider)),
-                    const SizedBox(height: 30),
+                    SizeConfig.addVerticalSpace(30),
                     QuizAnswers(questions: questions ?? []),
-                    const SizedBox(height: 30),
+                    SizeConfig.addVerticalSpace(30),
                     if (isSkipped.value == false)
                       FadeTransition(
                         opacity: skipButtonFadeController,
                         child: CustomButton(
                           'Skip',
                           onPressed: skipQuestion,
-                          height: 50,
-                          width: 200,
-                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                          height: SizeConfig.height(50),
+                          width: SizeConfig.width(200),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: SizeConfig.width(20),
+                          ),
                         ),
                       ),
+                    SizeConfig.addVerticalSpace(100),
                   ],
                 ),
               ),
@@ -76,7 +83,7 @@ class QuizScreen extends HookConsumerWidget {
           ),
         );
       },
-      error: (error, stackTrace) => const Scaffold(),
+      error: (error, stackTrace) => Scaffold(body: Center(child: Text('$error $stackTrace'))),
       loading: () => const CustomLoadingIndicator(),
     );
   }

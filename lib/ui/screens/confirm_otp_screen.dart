@@ -1,10 +1,9 @@
-import 'dart:developer' as dev;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quiz_u/constants.dart';
 import 'package:quiz_u/controllers/providers.dart';
+import 'package:quiz_u/size_config.dart';
 import 'package:quiz_u/ui/widgets/code_sent_card.dart';
 import 'package:quiz_u/ui/widgets/custom_button.dart';
 import 'package:quiz_u/ui/widgets/custom_otp_text_field.dart';
@@ -14,7 +13,7 @@ class ConfirmOTPScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final size = MediaQuery.of(context).size;
+    SizeConfig.init(context);
 
     void goToAuthWrapper() => Navigator.of(context).pushNamedAndRemoveUntil(kAuthWrapperRoute, (route) => false);
     void goToUserNameScreen() => Navigator.of(context).pushNamedAndRemoveUntil(kUserNameScreenRoute, (route) => false);
@@ -42,48 +41,52 @@ class ConfirmOTPScreen extends HookConsumerWidget {
       body: SizedBox(
         width: double.infinity,
         child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
-              const SizedBox(height: 100),
+              SizeConfig.addVerticalSpace(100),
               SizedBox(
-                height: 110,
+                height: SizeConfig.height(110),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                      padding: EdgeInsets.only(left: SizeConfig.width(30)),
                       child: TextButton(
-                        onPressed: () => Navigator.pop(context),
                         style: TextButton.styleFrom(
                           shape: const CircleBorder(),
                           elevation: 0,
                           foregroundColor: kPrimaryButtonColor,
-                          padding: const EdgeInsets.all(20),
+                          padding: EdgeInsets.all(SizeConfig.height(20)),
                         ),
                         child: SvgPicture.asset('assets/arrow_back.svg'),
+                        onPressed: () => Navigator.pop(context),
                       ),
                     ),
                     const CodeSendCard(),
                   ],
                 ),
               ),
-              const SizedBox(height: 110),
+              SizeConfig.addVerticalSpace(110),
               CustomOtpTextField(onSubmit: loginOrSignUp),
-              const SizedBox(height: 110),
+              SizeConfig.addVerticalSpace(110),
               const Text(
                 'Didn\'t get the code?',
                 style: TextStyle(color: kPrimaryTextColor, fontWeight: FontWeight.bold, fontSize: 16),
               ),
-              const SizedBox(height: 30),
+              SizeConfig.addVerticalSpace(30),
               CustomButton(
                 "Resend",
-                width: size.width * .4,
-                onPressed: () {},
-                style: const TextStyle(
+                width: SizeConfig.size!.width * .4,
+                onPressed: () {
+                  print('code resent');
+                },
+                style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 20,
+                  fontSize: SizeConfig.width(20),
                 ),
               ),
-              const SizedBox(height: 200),
+              SizeConfig.addVerticalSpace(200),
             ],
           ),
         ),

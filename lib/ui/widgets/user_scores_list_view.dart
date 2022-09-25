@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:quiz_u/constants.dart';
 import 'package:quiz_u/controllers/providers.dart';
+import 'package:quiz_u/size_config.dart';
 
 class UserScoresListView extends HookConsumerWidget {
   const UserScoresListView({Key? key}) : super(key: key);
@@ -12,16 +13,18 @@ class UserScoresListView extends HookConsumerWidget {
     return userScores.when(
       data: (scores) {
         return SizedBox(
-          height: 100,
+          height: 150,
           child: ListView.separated(
-            separatorBuilder: (context, index) => const SizedBox(height: 20),
-            padding: const EdgeInsets.only(bottom: 20),
+            physics: const NeverScrollableScrollPhysics(),
+            separatorBuilder: (context, index) => SizeConfig.addVerticalSpace(20),
+            padding: EdgeInsets.only(bottom: SizeConfig.height(20)),
             itemCount: scores.length,
             itemBuilder: (context, index) {
               return Container(
                 height: 55,
                 width: double.infinity,
                 alignment: Alignment.center,
+                margin: const EdgeInsets.symmetric(horizontal: 45),
                 padding: const EdgeInsets.symmetric(horizontal: 40),
                 decoration: BoxDecoration(
                   color: kTextFeildFillColor,
@@ -32,11 +35,19 @@ class UserScoresListView extends HookConsumerWidget {
                   children: [
                     Text(
                       scores[index].timeSaved,
-                      style: const TextStyle(color: kPrimaryTextColor, fontWeight: FontWeight.w600, fontSize: 15),
+                      style: TextStyle(
+                        color: kPrimaryTextColor,
+                        fontWeight: FontWeight.w600,
+                        fontSize: SizeConfig.width(15),
+                      ),
                     ),
                     Text(
                       '${scores[index].score}',
-                      style: const TextStyle(color: kPrimaryTextColor, fontWeight: FontWeight.w600, fontSize: 15),
+                      style: TextStyle(
+                        color: kPrimaryTextColor,
+                        fontWeight: FontWeight.w600,
+                        fontSize: SizeConfig.width(15),
+                      ),
                     ),
                   ],
                 ),
@@ -46,10 +57,15 @@ class UserScoresListView extends HookConsumerWidget {
         );
       },
       error: (error, stackTrace) => Text('$error $stackTrace'),
-      loading: () => const SizedBox(
-        height: 50,
-        width: 50,
-        child: LoadingIndicator(indicatorType: Indicator.circleStrokeSpin, strokeWidth: 8, colors: [kPrimaryTextColor]),
+      loading: () => Container(
+        height: SizeConfig.height(150),
+        width: SizeConfig.height(150),
+        alignment: Alignment.center,
+        child: const LoadingIndicator(
+          indicatorType: Indicator.circleStrokeSpin,
+          strokeWidth: 5,
+          colors: [kPrimaryTextColor],
+        ),
       ),
     );
   }

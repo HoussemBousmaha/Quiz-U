@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:quiz_u/size_config.dart';
 import 'package:quiz_u/ui/widgets/leaderboard_circle_avatar.dart';
 
 class TopThree extends HookConsumerWidget {
@@ -10,23 +11,35 @@ class TopThree extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SizedBox(
-      height: 240,
+      height: SizeConfig.width(240),
       child: Stack(
         alignment: Alignment.center,
         children: [
           Positioned(
             top: 0,
-            child: LeaderBoardCircleAvatar(name: topScores?[0]['name'], score: topScores?[0]['score']),
+            child: LeaderBoardCircleAvatar(
+              name: topScores?[0]['name'],
+              score: topScores?[0]['score'],
+              rank: 1,
+            ),
           ),
           Positioned(
-            top: 60,
-            left: 30,
-            child: LeaderBoardCircleAvatar(name: topScores?[1]['name'], score: topScores?[1]['score']),
+            top: SizeConfig.height(60),
+            left: SizeConfig.width(30),
+            child: LeaderBoardCircleAvatar(
+              name: topScores?[1]['name'],
+              score: topScores?[1]['score'],
+              rank: 2,
+            ),
           ),
           Positioned(
-            top: 60,
-            right: 30,
-            child: LeaderBoardCircleAvatar(name: topScores?[2]['name'], score: topScores?[2]['score']),
+            top: SizeConfig.height(60),
+            right: SizeConfig.width(30),
+            child: LeaderBoardCircleAvatar(
+              name: topScores?[2]['name'],
+              score: topScores?[2]['score'],
+              rank: 3,
+            ),
           ),
         ],
       ),

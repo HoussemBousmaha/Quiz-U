@@ -15,7 +15,7 @@ class BottomNavBar extends HookConsumerWidget {
       margin: const EdgeInsets.fromLTRB(30, 0, 30, 40),
       decoration: BoxDecoration(
         color: Colors.white,
-        border: Border.all(color: kSecondaryTextFieldBorderColor, width: 2),
+        border: Border.all(color: kSecondaryTextFieldBorderColor, width: 3),
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(6),
           topRight: Radius.circular(6),

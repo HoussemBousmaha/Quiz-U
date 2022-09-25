@@ -1,6 +1,7 @@
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:quiz_u/size_config.dart';
 
 const kGenderApiKey = "5AoKZBgFj8r5e93lVetQGBQbJ7t7gR9jsPKn";
 
@@ -46,14 +47,11 @@ final kHeadLineTextStyle = TextStyle(
   color: kHeadLineTextColor,
   fontWeight: FontWeight.bold,
   fontFamily: GoogleFonts.pacifico().fontFamily,
-  fontSize: 40,
+  fontSize: SizeConfig.width(40),
 );
 
-final kPrimaryTextStyle = TextStyle(
-  color: Colors.white,
-  fontFamily: GoogleFonts.lato().fontFamily,
-);
+const kPrimaryTextStyle = TextStyle(color: Colors.white);
 
 const kDefaultDuration = 600;
 
-const kDefaultQuizTime = 10.0;
+const kDefaultQuizTime = 1000.0;

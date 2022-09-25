@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quiz_u/constants.dart';
 import 'package:quiz_u/controllers/auth.dart';
-import 'package:quiz_u/controllers/database.dart';
+
 import 'package:quiz_u/models/score.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -29,15 +29,11 @@ final userScoresProvider = FutureProvider.autoDispose<List<Score>>((ref) async {
     ),
   );
 
-  scores.sort((a, b) => a.score.compareTo(b.score));
+  scores.sort((a, b) => b.score.compareTo(a.score));
   await Future.delayed(const Duration(seconds: 1));
 
   return scores;
 });
-
-final databaseProvider = Provider.autoDispose<DatabaseHelper>(
-  (ref) => DatabaseHelper(),
-);
 
 final mobileNumberProvider = StateProvider<String>(
   (ref) => '',

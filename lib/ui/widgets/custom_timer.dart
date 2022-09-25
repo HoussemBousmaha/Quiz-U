@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quiz_u/constants.dart';
 import 'package:quiz_u/controllers/providers.dart';
 import 'package:quiz_u/controllers/utils.dart';
+import 'package:quiz_u/size_config.dart';
 
 class CustomTimer extends HookConsumerWidget {
   const CustomTimer({Key? key}) : super(key: key);
@@ -32,10 +33,10 @@ class CustomTimer extends HookConsumerWidget {
               ),
               content: Container(
                 alignment: Alignment.center,
-                height: 40,
+                height: SizeConfig.height(40),
                 child: Text(
                   'Your Scored ${ref.watch(questionIndexProvider)}',
-                  style: const TextStyle(color: kPrimaryTextColor).copyWith(fontSize: 15),
+                  style: const TextStyle(color: kPrimaryTextColor).copyWith(fontSize: SizeConfig.width(15)),
                 ),
               ),
               actions: [
@@ -82,8 +83,8 @@ class CustomTimer extends HookConsumerWidget {
     return CustomPaint(
       painter: TimerPainter(ref.watch(angleProvider)),
       child: Container(
-        height: 100,
-        width: 100,
+        height: SizeConfig.height(100),
+        width: SizeConfig.height(100),
         alignment: Alignment.center,
         child: Text(intToTimeLeft(ref.watch(timeProvider).toInt())),
       ),
@@ -101,13 +102,13 @@ class TimerPainter extends CustomPainter {
     final ringPainter = Paint()
       ..color = kPrimaryTextColor
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 12
+      ..strokeWidth = SizeConfig.height(8)
       ..strokeCap = StrokeCap.round;
     final circlePainter = Paint()..color = kPrimaryButtonColor.withOpacity(0.2);
     final backgroudRingPainter = Paint()
       ..color = kPrimaryTextColor.withOpacity(0.2)
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 6
+      ..strokeWidth = SizeConfig.width(4)
       ..strokeCap = StrokeCap.round;
 
     final center = Offset(size.width / 2, size.height / 2);

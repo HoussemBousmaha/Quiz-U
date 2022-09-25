@@ -7,7 +7,6 @@ import 'package:intl/intl.dart';
 import 'package:quiz_u/constants.dart';
 import 'package:quiz_u/controllers/providers.dart';
 import 'package:quiz_u/models/score.dart';
-import 'package:quiz_u/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth {
@@ -32,10 +31,6 @@ class Auth {
       if (data['user_status'] != null) {
         return true;
       } else {
-        // add to firestore
-        final user = User(name: data['name'], mobile: data['mobile'], token: token);
-        ref.read(databaseProvider).addUser(user);
-
         return false;
       }
     } catch (err) {
@@ -56,14 +51,6 @@ class Auth {
             data: body,
             options: Options(headers: {HttpHeaders.authorizationHeader: token}),
           );
-
-      final data = responce.data;
-
-      // create the user object
-      final user = User(name: userName, mobile: data['mobile'], token: token);
-
-      // add to firestore
-      ref.read(databaseProvider).addUser(user);
 
       return responce.data['success'];
     } catch (err) {

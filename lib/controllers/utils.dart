@@ -24,8 +24,6 @@ String intToTimeLeft(int value) {
 
   s = value - (h * 3600) - (m * 60);
 
-  String hourLeft = h.toString().length < 2 ? "0$h" : h.toString();
-
   String minuteLeft = m.toString().length < 2 ? "0$m" : m.toString();
 
   String secondsLeft = s.toString().length < 2 ? "0$s" : s.toString();

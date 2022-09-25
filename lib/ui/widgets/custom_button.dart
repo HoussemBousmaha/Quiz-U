@@ -29,7 +29,7 @@ class CustomButton extends StatelessWidget {
       width: width,
       margin: margin,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(borderRadius ?? 6),
+        borderRadius: BorderRadius.circular(borderRadius ?? 3),
         child: TextButton(
           style: TextButton.styleFrom(backgroundColor: const Color(0xFF5B61FE), foregroundColor: Colors.white, padding: padding),
           onPressed: onPressed,

@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quiz_u/constants.dart';
 import 'package:quiz_u/controllers/providers.dart';
+import 'package:quiz_u/size_config.dart';
 import 'package:quiz_u/ui/widgets/custom_button.dart';
 import 'package:quiz_u/ui/widgets/custom_text_field.dart';
 
@@ -11,6 +12,7 @@ class UserNameScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    SizeConfig.init(context);
     final nameController = useTextEditingController();
 
     bool validateUserName(String? userName) => userName != null && userName.isNotEmpty;

@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quiz_u/constants.dart';
 import 'package:quiz_u/controllers/providers.dart';
+import 'package:quiz_u/size_config.dart';
 import 'package:quiz_u/ui/widgets/loading_indicator.dart';
 import 'package:quiz_u/ui/widgets/top_three.dart';
 
@@ -10,6 +11,7 @@ class LeaderBoardScreen extends HookConsumerWidget {
   const LeaderBoardScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    SizeConfig.init(context);
     final topScores = ref.watch(topScoresProvider);
 
     return topScores.when(
@@ -17,48 +19,98 @@ class LeaderBoardScreen extends HookConsumerWidget {
         return Scaffold(
           body: SizedBox(
             width: double.infinity,
-            child: Column(
-              children: [
-                const SizedBox(height: 70),
-                Text('QuizU', style: kHeadLineTextStyle),
-                const SizedBox(height: 50),
-                Text('LeaderBoard', style: kHeadLineTextStyle.copyWith(fontSize: 30, fontWeight: FontWeight.w500)),
-                const SizedBox(height: 35),
-                TopThree(topScores: topScores),
-                Expanded(
-                  child: ListView.separated(
-                    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-                    itemBuilder: ((context, index) {
-                      return Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 7),
-                        height: 60,
-                        width: 320,
-                        decoration: BoxDecoration(
-                          color: kTextFeildFillColor,
-                          border: Border.all(color: Colors.white, width: 2),
-                        ),
-                        child: Row(
-                          children: [
-                            Text('${index + 3}', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
-                            Container(
-                              height: 100,
-                              width: 100,
-                              padding: const EdgeInsets.all(7),
-                              decoration: BoxDecoration(shape: BoxShape.circle, color: kTextFeildFillColor, border: Border.all(color: kPrimaryTextFieldBorderColor, width: 2)),
-                              child: SvgPicture.asset('assets/male.svg'),
-                            ),
-                            Text(topScores?[3 + index]['name'], style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
-                            const Spacer(),
-                            Text('${topScores?[3 + index]['score']}', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600))
-                          ],
-                        ),
-                      );
-                    }),
-                    separatorBuilder: (context, index) => const SizedBox(height: 20),
-                    itemCount: 7,
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  SizeConfig.addVerticalSpace(120),
+                  Text('QuizU', style: kHeadLineTextStyle),
+                  SizeConfig.addVerticalSpace(50),
+                  Text(
+                    'LeaderBoard',
+                    style: kHeadLineTextStyle.copyWith(
+                      fontWeight: FontWeight.w500,
+                      fontSize: SizeConfig.width(30),
+                    ),
                   ),
-                ),
-              ],
+                  SizeConfig.addVerticalSpace(30),
+                  TopThree(topScores: topScores),
+                  SizedBox(
+                    height: SizeConfig.height(700),
+                    child: ListView.separated(
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: SizeConfig.width(40),
+                        vertical: SizeConfig.height(20),
+                      ),
+                      itemBuilder: ((context, index) {
+                        return Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: SizeConfig.width(20),
+                            vertical: SizeConfig.height(8),
+                          ),
+                          height: SizeConfig.height(65),
+                          width: SizeConfig.width(300),
+                          decoration: BoxDecoration(
+                            color: kTextFeildFillColor,
+                            border: Border.all(color: Colors.white, width: 2),
+                          ),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: SizeConfig.width(25),
+                                height: SizeConfig.height(25),
+                                alignment: Alignment.center,
+                                decoration: const BoxDecoration(color: kPrimaryButtonColor, shape: BoxShape.circle),
+                                child: Text(
+                                  '${index + 4}',
+                                  style: TextStyle(
+                                    fontSize: SizeConfig.width(10),
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                height: SizeConfig.height(100),
+                                width: SizeConfig.width(100),
+                                padding: EdgeInsets.all(SizeConfig.height(7)),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: kTextFeildFillColor,
+                                  border: Border.all(color: kPrimaryTextFieldBorderColor, width: 2),
+                                ),
+                                child: SvgPicture.asset('assets/male.svg'),
+                              ),
+                              SizedBox(
+                                width: SizeConfig.width(100),
+                                child: Text(
+                                  topScores?[3 + index]['name'],
+                                  style: TextStyle(
+                                    fontSize: SizeConfig.width(14),
+                                    fontWeight: FontWeight.w600,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ),
+                              const Spacer(),
+                              Text(
+                                '${topScores?[3 + index]['score']}',
+                                style: TextStyle(
+                                  fontSize: SizeConfig.width(20),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                      }),
+                      separatorBuilder: (context, index) => const SizedBox(height: 20),
+                      itemCount: 7,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         );

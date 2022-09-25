@@ -16,7 +16,7 @@ class CustomLoadingIndicator extends StatelessWidget {
           width: size.width * 0.4,
           child: const LoadingIndicator(
             indicatorType: Indicator.circleStrokeSpin,
-            strokeWidth: 8,
+            strokeWidth: 5,
             colors: [kPrimaryTextColor],
           ),
         ),

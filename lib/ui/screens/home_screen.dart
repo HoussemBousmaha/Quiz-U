@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quiz_u/constants.dart';
+import 'package:quiz_u/size_config.dart';
 import 'package:quiz_u/ui/widgets/custom_button.dart';
 
 class HomeScreen extends HookConsumerWidget {
@@ -8,26 +9,26 @@ class HomeScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    const secondDescriptineHeader = Text(
+    SizeConfig.init(context);
+
+    final secondDescriptineHeader = Text(
       'Answer as much questions\ncorrectly within 2 minutes',
       textAlign: TextAlign.center,
       style: TextStyle(
         color: kPrimaryTextColor,
         fontWeight: FontWeight.bold,
-        fontSize: 20,
+        fontSize: SizeConfig.width(20),
       ),
     );
-    const firstDescriptiveHeader = Text(
+    final firstDescriptiveHeader = Text(
       'Ready to test your\nknowledge and challenge\nothers?',
       textAlign: TextAlign.center,
       style: TextStyle(
         fontWeight: FontWeight.bold,
-        fontSize: 20,
         color: kPrimaryTextColor,
+        fontSize: SizeConfig.width(20),
       ),
     );
-
-    final size = MediaQuery.of(context).size;
 
     void goToQuizScreen() => Navigator.of(context).pushNamed(kQuizScreenRoute);
 
@@ -36,24 +37,32 @@ class HomeScreen extends HookConsumerWidget {
       body: Stack(
         alignment: Alignment.center,
         children: [
-          Center(
-            child: Column(
-              children: [
-                const SizedBox(height: 140),
-                Text('QuizU', style: kHeadLineTextStyle),
-                const SizedBox(height: 140),
-                firstDescriptiveHeader,
-                const SizedBox(height: 50),
-                CustomButton(
-                  'Quiz Me!',
-                  width: size.width * 0.5,
-                  borderRadius: 4,
-                  onPressed: () => goToQuizScreen(),
-                  style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-                ),
-                const SizedBox(height: 50),
-                secondDescriptineHeader,
-              ],
+          SizedBox(
+            width: double.infinity,
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  SizeConfig.addVerticalSpace(120),
+                  Text('QuizU', style: kHeadLineTextStyle),
+                  SizeConfig.addVerticalSpace(100),
+                  firstDescriptiveHeader,
+                  SizeConfig.addVerticalSpace(50),
+                  CustomButton(
+                    'Quiz Me!',
+                    width: SizeConfig.size!.width * .5,
+                    borderRadius: 4,
+                    onPressed: () => goToQuizScreen(),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: SizeConfig.width(20),
+                    ),
+                  ),
+                  SizeConfig.addVerticalSpace(50),
+                  secondDescriptineHeader,
+                ],
+              ),
             ),
           ),
         ],

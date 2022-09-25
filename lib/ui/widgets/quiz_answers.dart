@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quiz_u/constants.dart';
 import 'package:quiz_u/controllers/providers.dart';
+import 'package:quiz_u/size_config.dart';
 
 class QuizAnswers extends HookConsumerWidget {
   const QuizAnswers({
@@ -25,10 +26,7 @@ class QuizAnswers extends HookConsumerWidget {
           return AlertDialog(
             backgroundColor: kAppBackgroundColor,
             title: const Center(
-              child: Text(
-                'You lost!',
-                style: TextStyle(color: kPrimaryTextColor),
-              ),
+              child: Text('You lost!', style: TextStyle(color: kPrimaryTextColor)),
             ),
             actions: [
               Center(
@@ -72,23 +70,21 @@ class QuizAnswers extends HookConsumerWidget {
     }
 
     return SizedBox(
-      height: 200,
+      height: SizeConfig.height(170),
       child: GridView.builder(
-        physics: const BouncingScrollPhysics(),
-        padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 10),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        physics: const NeverScrollableScrollPhysics(),
+        padding: EdgeInsets.symmetric(horizontal: SizeConfig.width(35), vertical: SizeConfig.height(15)),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          childAspectRatio: 140 / 65,
-          crossAxisSpacing: 30,
-          mainAxisSpacing: 15,
+          childAspectRatio: SizeConfig.width(140) / SizeConfig.height(65),
+          crossAxisSpacing: SizeConfig.width(30),
+          mainAxisSpacing: SizeConfig.width(15),
         ),
         itemCount: 4,
         itemBuilder: ((context, index) {
           return GestureDetector(
             onTap: () => submitAnswer(index),
             child: Container(
-              height: 65,
-              width: 160,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: ref.watch(isAnswerSubmittedProvider)[index]
@@ -103,7 +99,7 @@ class QuizAnswers extends HookConsumerWidget {
                 answers[index],
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: SizeConfig.width(16),
                   color: ref.watch(isAnswerSubmittedProvider)[index] ? Colors.white : kPrimaryTextColor,
                 ),
               ),
