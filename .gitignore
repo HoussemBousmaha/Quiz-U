@@ -25,18 +25,18 @@ migrate_working_dir/
 **/doc/api/
 **/ios/Flutter/.last_build_id
 .dart_tool/
-.flutter-plugins
-.flutter-plugins-dependencies
+# .flutter-plugins
+# .flutter-plugins-dependencies
 .packages
 .pub-cache/
 .pub/
 /build/
 android/
 ios/
-pubspec.*
-analysis_options.yaml
-.metadata
-lib/firebase_options.dart
+# pubspec.*
+# analysis_options.yaml
+# .metadata
+
 
 # Symbolication related
 app.*.symbols
