@@ -18,9 +18,11 @@ class CustomTimer extends HookConsumerWidget {
 
     final isQuizStarted = ref.watch(isQuizStartedProvider);
 
+    void goToAuthWrapper() => Navigator.of(context).pushNamedAndRemoveUntil(kAuthWrapperRoute, ((route) => false));
+
     Future<void> showTimeIsUpDialog() async {
       if (ref.watch(timeProvider) <= 0) {
-        await showDialog(
+        final result = await showDialog(
           context: context,
           builder: ((context) {
             return AlertDialog(
@@ -44,7 +46,7 @@ class CustomTimer extends HookConsumerWidget {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(backgroundColor: kPrimaryButtonColor),
                     onPressed: () async {
-                      Navigator.of(context).pushNamedAndRemoveUntil(kAuthWrapperRoute, ((route) => false));
+                      goToAuthWrapper();
 
                       await ref.read(authProvider).saveUserScore(ref.watch(questionIndexProvider));
                     },
@@ -58,6 +60,10 @@ class CustomTimer extends HookConsumerWidget {
             );
           }),
         );
+        if (result == null) {
+          goToAuthWrapper();
+          await ref.read(authProvider).saveUserScore(ref.watch(questionIndexProvider));
+        }
       }
     }
 

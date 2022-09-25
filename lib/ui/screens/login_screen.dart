@@ -33,6 +33,45 @@ class LoginScreen extends HookConsumerWidget {
       return isMobileNumberValid;
     }
 
+    void showInvalidMobileDialog() async {
+      await showDialog(
+        context: context,
+        builder: ((context) {
+          return AlertDialog(
+            backgroundColor: kAppBackgroundColor,
+            title: const Center(
+              child: Text(
+                'There was an error',
+                style: TextStyle(color: kPrimaryTextColor),
+              ),
+            ),
+            content: Container(
+              alignment: Alignment.center,
+              height: SizeConfig.height(40),
+              child: Text(
+                'Invalid Mobile Number',
+                style: const TextStyle(color: kPrimaryTextColor).copyWith(fontSize: SizeConfig.width(15)),
+              ),
+            ),
+            actions: [
+              Center(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: kPrimaryButtonColor),
+                  onPressed: () async {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text(
+                    'Ok',
+                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ],
+          );
+        }),
+      );
+    }
+
     return Scaffold(
       backgroundColor: kAppBackgroundColor,
       body: SingleChildScrollView(
@@ -88,6 +127,7 @@ class LoginScreen extends HookConsumerWidget {
                 if (isMobileNumberValid) {
                   goToConfirmOtpScreen();
                 } else {
+                  showInvalidMobileDialog();
                   print('MobileNumberNotValid');
                 }
               },

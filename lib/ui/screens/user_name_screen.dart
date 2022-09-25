@@ -44,26 +44,34 @@ class UserNameScreen extends HookConsumerWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(height: 200),
+              SizeConfig.addVerticalSpace(200),
               Text('QuizU', style: kHeadLineTextStyle),
-              const SizedBox(height: 160),
-              const Text(
+              SizeConfig.addVerticalSpace(160),
+              Text(
                 'What is your name?',
-                style: TextStyle(color: kPrimaryTextColor, fontWeight: FontWeight.bold, fontSize: 20),
+                style: TextStyle(
+                  color: kPrimaryTextColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: SizeConfig.width(20),
+                ),
               ),
-              const SizedBox(height: 50),
+              SizeConfig.addVerticalSpace(50),
               CustomTextField(
                 label: '',
                 controller: nameController,
                 align: TextAlign.center,
-                style: const TextStyle(color: kPrimaryTextColor, fontWeight: FontWeight.bold, fontSize: 16),
+                style: TextStyle(
+                  color: kPrimaryTextColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: SizeConfig.width(16),
+                ),
               ),
-              const SizedBox(height: 70),
+              SizeConfig.addVerticalSpace(70),
               CustomButton(
                 'Done',
-                width: size.width * 0.5,
+                width: SizeConfig.width(190),
                 onPressed: updateUserName,
-                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 22),
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: SizeConfig.width(22)),
               ),
             ],
           ),
