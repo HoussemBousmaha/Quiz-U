@@ -1,3 +1,3 @@
 # quiz
 
-[![IMAGE_ALT](https://img.youtube.com/vi/UmX4kyB2wfg/0.jpg)](https://www.youtube.com/watch?v=UmX4kyB2wfg)
+[![IMAGE_ALT](./quiz_u.png)](https://www.youtube.com/watch?v=H48FY8IZUD0)
