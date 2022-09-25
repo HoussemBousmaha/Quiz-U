@@ -1,4 +1,4 @@
-# quiz
+# Quiz U
 
 ## go to directory
 
@@ -12,4 +12,8 @@
 
 ``` flutter run ```
 
-[![IMAGE_ALT](./quiz_u.png)](https://www.youtube.com/watch?v=H48FY8IZUD0)
+## preview
+
+    #### click on image to watch preview
+
+    [![IMAGE_ALT](./quiz_u.png)](https://www.youtube.com/watch?v=H48FY8IZUD0)
