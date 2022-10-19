@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
-import 'package:quiz_u/constants.dart';
+
+import '../../constants.dart';
 
 class CustomOtpTextField extends StatelessWidget {
   const CustomOtpTextField({

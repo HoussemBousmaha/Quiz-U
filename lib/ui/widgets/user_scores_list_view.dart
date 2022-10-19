@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loading_indicator/loading_indicator.dart';
-import 'package:quiz_u/constants.dart';
-import 'package:quiz_u/controllers/providers.dart';
-import 'package:quiz_u/size_config.dart';
+
+import '../../constants.dart';
+import '../../controllers/providers.dart';
+import '../../size_config.dart';
 
 class UserScoresListView extends HookConsumerWidget {
   const UserScoresListView({Key? key}) : super(key: key);

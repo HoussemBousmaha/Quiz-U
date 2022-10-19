@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_u/constants.dart';
-import 'package:quiz_u/size_config.dart';
+
+import '../../constants.dart';
+import '../../size_config.dart';
 
 class QuestionCard extends StatelessWidget {
   const QuestionCard({

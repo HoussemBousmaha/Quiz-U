@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:quiz_u/constants.dart';
-import 'package:quiz_u/controllers/providers.dart';
+
+import '../../constants.dart';
+import '../../controllers/providers.dart';
 
 class BottomNavBar extends HookConsumerWidget {
   const BottomNavBar({Key? key}) : super(key: key);
@@ -30,19 +31,22 @@ class BottomNavBar extends HookConsumerWidget {
             onTap: () {
               ref.read(screenIndexProvider.notifier).state = 0;
             },
-            child: Icon(Icons.home_outlined, color: ref.watch(screenIndexProvider) == 0 ? kActiveIconColor : kInactiveIconColor, size: 30),
+            child: Icon(Icons.home_outlined,
+                color: ref.watch(screenIndexProvider) == 0 ? kActiveIconColor : kInactiveIconColor, size: 30),
           ),
           GestureDetector(
             onTap: () {
               ref.read(screenIndexProvider.notifier).state = 1;
             },
-            child: Icon(Icons.leaderboard_outlined, color: ref.watch(screenIndexProvider) == 1 ? kActiveIconColor : kInactiveIconColor, size: 30),
+            child: Icon(Icons.leaderboard_outlined,
+                color: ref.watch(screenIndexProvider) == 1 ? kActiveIconColor : kInactiveIconColor, size: 30),
           ),
           GestureDetector(
             onTap: () {
               ref.read(screenIndexProvider.notifier).state = 2;
             },
-            child: Icon(Icons.person_outlined, color: ref.watch(screenIndexProvider) == 2 ? kActiveIconColor : kInactiveIconColor, size: 30),
+            child: Icon(Icons.person_outlined,
+                color: ref.watch(screenIndexProvider) == 2 ? kActiveIconColor : kInactiveIconColor, size: 30),
           ),
         ],
       ),

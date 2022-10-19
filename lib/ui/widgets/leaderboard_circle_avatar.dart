@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:quiz_u/constants.dart';
-import 'package:quiz_u/size_config.dart';
+
+import '../../constants.dart';
+import '../../size_config.dart';
 
 class LeaderBoardCircleAvatar extends HookConsumerWidget {
   const LeaderBoardCircleAvatar({

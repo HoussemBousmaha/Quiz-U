@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:phone_number/phone_number.dart';
-import 'package:quiz_u/constants.dart';
-import 'package:quiz_u/controllers/providers.dart';
-import 'package:quiz_u/controllers/utils.dart';
-import 'package:quiz_u/size_config.dart';
-import 'package:quiz_u/ui/widgets/custom_button.dart';
-import 'package:quiz_u/ui/widgets/custom_text_field.dart';
+
+import '../../constants.dart';
+import '../../controllers/providers.dart';
+import '../../controllers/utils.dart';
+import '../../size_config.dart';
+import '../widgets/custom_button.dart';
+import '../widgets/custom_text_field.dart';
 
 class LoginScreen extends HookConsumerWidget {
   const LoginScreen({super.key});
@@ -23,7 +24,8 @@ class LoginScreen extends HookConsumerWidget {
     );
 
     final mobileController = useTextEditingController();
-    final countryCodeController = useTextEditingController(text: '${countryCodeNotifier.value.name} (${countryCodeNotifier.value.dialCode})');
+    final countryCodeController =
+        useTextEditingController(text: '${countryCodeNotifier.value.name} (${countryCodeNotifier.value.dialCode})');
 
     Future<bool> validateMobileNumber(String mobileNumber) async {
       final phoneNumberUtil = PhoneNumberUtil();

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:quiz_u/constants.dart';
-import 'package:quiz_u/controllers/providers.dart';
-import 'package:quiz_u/size_config.dart';
-import 'package:quiz_u/ui/widgets/code_sent_card.dart';
-import 'package:quiz_u/ui/widgets/custom_button.dart';
-import 'package:quiz_u/ui/widgets/custom_otp_text_field.dart';
+
+import '../../constants.dart';
+import '../../controllers/providers.dart';
+import '../../size_config.dart';
+import '../widgets/code_sent_card.dart';
+import '../widgets/custom_button.dart';
+import '../widgets/custom_otp_text_field.dart';
 
 class ConfirmOTPScreen extends HookConsumerWidget {
   const ConfirmOTPScreen({Key? key}) : super(key: key);

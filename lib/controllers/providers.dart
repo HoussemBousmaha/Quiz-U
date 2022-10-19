@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quiz_u/constants.dart';
-import 'package:quiz_u/controllers/auth.dart';
-
-import 'package:quiz_u/models/score.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../constants.dart';
+import '../models/score.dart';
+import 'auth.dart';
 
 final authProvider = StateProvider.autoDispose<Auth>(
   (ref) => Auth(ref),

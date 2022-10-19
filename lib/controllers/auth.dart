@@ -1,13 +1,13 @@
-// ignore_for_file: avoid_print
-
 import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:quiz_u/constants.dart';
-import 'package:quiz_u/controllers/providers.dart';
-import 'package:quiz_u/models/score.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../constants.dart';
+import '../models/score.dart';
+import 'providers.dart';
 
 class Auth {
   const Auth(this.ref);
@@ -121,7 +121,9 @@ class Auth {
 
       if (token == null) return false;
 
-      final responce = await ref.read(dioClientProvider).get(kAuthTokenUrl, options: Options(headers: {HttpHeaders.authorizationHeader: token}));
+      final responce = await ref
+          .read(dioClientProvider)
+          .get(kAuthTokenUrl, options: Options(headers: {HttpHeaders.authorizationHeader: token}));
       ref.read(tokenProvider.notifier).state = token;
 
       return responce.data['success'];

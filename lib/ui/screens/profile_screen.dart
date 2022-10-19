@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:quiz_u/constants.dart';
-import 'package:quiz_u/controllers/providers.dart';
-import 'package:quiz_u/size_config.dart';
-import 'package:quiz_u/ui/widgets/loading_indicator.dart';
-import 'package:quiz_u/ui/widgets/user_scores_list_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../constants.dart';
+import '../../controllers/providers.dart';
+import '../../size_config.dart';
+import '../widgets/loading_indicator.dart';
+import '../widgets/user_scores_list_view.dart';
 
 class ProfileScreen extends HookConsumerWidget {
   const ProfileScreen({super.key});

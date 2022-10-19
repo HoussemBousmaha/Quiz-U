@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:quiz_u/constants.dart';
-import 'package:quiz_u/controllers/providers.dart';
-import 'package:quiz_u/size_config.dart';
-import 'package:quiz_u/ui/widgets/loading_indicator.dart';
-import 'package:quiz_u/ui/widgets/top_three.dart';
+
+import '../../constants.dart';
+import '../../controllers/providers.dart';
+import '../../size_config.dart';
+import '../widgets/loading_indicator.dart';
+import '../widgets/top_three.dart';
 
 class LeaderBoardScreen extends HookConsumerWidget {
   const LeaderBoardScreen({Key? key}) : super(key: key);

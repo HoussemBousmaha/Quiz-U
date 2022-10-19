@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:quiz_u/controllers/providers.dart';
-import 'package:quiz_u/ui/screens/home_wrapper.dart';
-import 'package:quiz_u/ui/screens/login_screen.dart';
-import 'package:quiz_u/ui/widgets/loading_indicator.dart';
+
+import '../../controllers/providers.dart';
+import '../widgets/loading_indicator.dart';
+import 'home_wrapper.dart';
+import 'login_screen.dart';
 
 class AuthWrapper extends HookConsumerWidget {
   const AuthWrapper({super.key});

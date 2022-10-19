@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:quiz_u/constants.dart';
-import 'package:quiz_u/size_config.dart';
-import 'package:quiz_u/ui/widgets/custom_button.dart';
+
+import '../../constants.dart';
+import '../../size_config.dart';
+import '../widgets/custom_button.dart';
 
 class HomeScreen extends HookConsumerWidget {
   const HomeScreen({Key? key}) : super(key: key);

@@ -31,7 +31,8 @@ class CustomButton extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(borderRadius ?? 3),
         child: TextButton(
-          style: TextButton.styleFrom(backgroundColor: const Color(0xFF5B61FE), foregroundColor: Colors.white, padding: padding),
+          style: TextButton.styleFrom(
+              backgroundColor: const Color(0xFF5B61FE), foregroundColor: Colors.white, padding: padding),
           onPressed: onPressed,
           child: Text(
             text,

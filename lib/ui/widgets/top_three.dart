@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:quiz_u/size_config.dart';
-import 'package:quiz_u/ui/widgets/leaderboard_circle_avatar.dart';
+
+import '../../size_config.dart';
+import 'leaderboard_circle_avatar.dart';
 
 class TopThree extends HookConsumerWidget {
   const TopThree({Key? key, required this.topScores}) : super(key: key);

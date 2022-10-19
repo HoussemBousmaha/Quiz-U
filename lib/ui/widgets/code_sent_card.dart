@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:quiz_u/constants.dart';
-import 'package:quiz_u/size_config.dart';
+
+import '../../constants.dart';
+import '../../size_config.dart';
 
 class CodeSendCard extends StatelessWidget {
   const CodeSendCard({super.key});

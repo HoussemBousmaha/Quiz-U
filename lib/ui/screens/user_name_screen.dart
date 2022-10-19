@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:quiz_u/constants.dart';
-import 'package:quiz_u/controllers/providers.dart';
-import 'package:quiz_u/size_config.dart';
-import 'package:quiz_u/ui/widgets/custom_button.dart';
-import 'package:quiz_u/ui/widgets/custom_text_field.dart';
+
+import '../../constants.dart';
+import '../../controllers/providers.dart';
+import '../../size_config.dart';
+import '../widgets/custom_button.dart';
+import '../widgets/custom_text_field.dart';
 
 class UserNameScreen extends HookConsumerWidget {
   const UserNameScreen({super.key});

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:quiz_u/constants.dart';
-import 'package:quiz_u/controllers/providers.dart';
-import 'package:quiz_u/size_config.dart';
+
+import '../../constants.dart';
+import '../../controllers/providers.dart';
+import '../../size_config.dart';
 
 class QuizAnswers extends HookConsumerWidget {
   const QuizAnswers({
@@ -15,7 +16,12 @@ class QuizAnswers extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final questionIndex = ref.watch(questionIndexProvider);
-    final answers = [questions[questionIndex]['a'], questions[questionIndex]['b'], questions[questionIndex]['c'], questions[questionIndex]['d']];
+    final answers = [
+      questions[questionIndex]['a'],
+      questions[questionIndex]['b'],
+      questions[questionIndex]['c'],
+      questions[questionIndex]['d']
+    ];
 
     final correctAnswer = questions[questionIndex][questions[questionIndex]['correct']];
 
@@ -52,8 +58,10 @@ class QuizAnswers extends HookConsumerWidget {
       final correctAnswerIndex = answers.indexWhere((answer) => answer == correctAnswer);
 
       if (isSubmitted[index] == false) {
-        ref.read(isAnswerSubmittedProvider.notifier).state = List.generate(4, (i) => index == i || correctAnswerIndex == i);
-        ref.read(isCorrectAnswersListProvider.notifier).state = List.generate(4, (index) => answers[index] == correctAnswer);
+        ref.read(isAnswerSubmittedProvider.notifier).state =
+            List.generate(4, (i) => index == i || correctAnswerIndex == i);
+        ref.read(isCorrectAnswersListProvider.notifier).state =
+            List.generate(4, (index) => answers[index] == correctAnswer);
         final isCorrect = ref.watch(isCorrectAnswersListProvider);
 
         await Future.delayed(const Duration(milliseconds: 300));

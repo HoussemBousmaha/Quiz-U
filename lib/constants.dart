@@ -1,7 +1,8 @@
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:quiz_u/size_config.dart';
+
+import 'size_config.dart';
 
 const kGenderApiKey = "5AoKZBgFj8r5e93lVetQGBQbJ7t7gR9jsPKn";
 
