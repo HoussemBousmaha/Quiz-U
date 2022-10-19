@@ -24,7 +24,10 @@ class QuizApp extends HookConsumerWidget {
         scaffoldBackgroundColor: kAppBackgroundColor,
         fontFamily: GoogleFonts.comicNeue().fontFamily,
         inputDecorationTheme: const InputDecorationTheme(
-            focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: kTextFeildFillColor, width: 2))),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: kTextFeildFillColor, width: 2),
+          ),
+        ),
       ),
       home: const AuthWrapper(),
       routes: {

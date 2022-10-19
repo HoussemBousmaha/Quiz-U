@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -32,11 +34,9 @@ class UserNameScreen extends HookConsumerWidget {
           gotoAuthWrapper();
         }
       } else {
-        print('user name is not valid');
+        log('user name is not valid');
       }
     }
-
-    final size = MediaQuery.of(context).size;
 
     return Scaffold(
       backgroundColor: kAppBackgroundColor,

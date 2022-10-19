@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -73,7 +75,7 @@ class ConfirmOTPScreen extends HookConsumerWidget {
           // go to home screen because token must be valid
           goToAuthWrapper();
         } else {
-          print('there is an error');
+          log('there is an error');
         }
       } else {
         showInvalidOTPDialog();
@@ -123,7 +125,7 @@ class ConfirmOTPScreen extends HookConsumerWidget {
                 "Resend",
                 width: SizeConfig.size!.width * .4,
                 onPressed: () {
-                  print('code resent');
+                  log('code resent');
                 },
                 style: TextStyle(
                   fontWeight: FontWeight.bold,

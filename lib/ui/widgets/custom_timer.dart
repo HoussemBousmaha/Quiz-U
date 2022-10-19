@@ -76,7 +76,7 @@ class CustomTimer extends HookConsumerWidget {
           ref.read(angleProvider.notifier).state = angleAnimation.value;
         });
         timeAnimation.addListener(() async {
-          // print('${timeAnimation.value}');
+          // log('${timeAnimation.value}');
           ref.read(timeProvider.notifier).state = timeAnimation.value;
 
           await showTimeIsUpDialog();

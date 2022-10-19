@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -34,7 +35,7 @@ class Auth {
         return false;
       }
     } catch (err) {
-      print('this is the error : $err');
+      log('this is the error : $err');
       return null;
     }
   }
@@ -54,7 +55,7 @@ class Auth {
 
       return responce.data['success'];
     } catch (err) {
-      print('$err');
+      log('$err');
       return false;
     }
   }
@@ -73,7 +74,7 @@ class Auth {
 
       return data;
     } catch (err) {
-      print('$err');
+      log('$err');
       return null;
     }
   }
@@ -91,7 +92,7 @@ class Auth {
 
       return scores;
     } catch (err) {
-      print(err);
+      log('$err');
       return null;
     }
   }
@@ -109,7 +110,7 @@ class Auth {
 
       return questions;
     } catch (err) {
-      print(err);
+      log('$err');
       return null;
     }
   }
@@ -128,7 +129,7 @@ class Auth {
 
       return responce.data['success'];
     } catch (err) {
-      print('$err');
+      log('$err');
       return false;
     }
   }
@@ -182,7 +183,7 @@ class Auth {
 
       return scores;
     } catch (err) {
-      print(err);
+      log('$err');
       return null;
     }
   }

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -130,7 +132,7 @@ class LoginScreen extends HookConsumerWidget {
                   goToConfirmOtpScreen();
                 } else {
                   showInvalidMobileDialog();
-                  print('MobileNumberNotValid');
+                  log('MobileNumberNotValid');
                 }
               },
             ),
