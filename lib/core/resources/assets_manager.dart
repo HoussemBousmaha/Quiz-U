@@ -1,0 +1,3 @@
+class ImageAssets {}
+
+class JsonAssets {}
