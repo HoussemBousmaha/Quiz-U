@@ -86,8 +86,8 @@ class _LoginViewState extends ConsumerState<LoginView> {
     return Container(
       alignment: Alignment.center,
       height: AppSize.hs60,
-      decoration: const BoxDecoration(),
       child: TextField(
+        onSubmitted: (_) => Navigator.of(context).pushNamed(Routes.confirmOtpView),
         onChanged: (mobileNumber) => ref.read(mobileNumberProvider.notifier).state = mobileNumber,
         cursorColor: ColorManager.white,
         textInputAction: TextInputAction.done,

@@ -1,7 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get_it/get_it.dart';
-import 'package:quiz_u_final/presentation/views/confirm_otp/confirm_otp_view_model.dart';
-import 'package:quiz_u_final/presentation/views/login/login_view_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/data_source/local_data_source.dart';
@@ -10,7 +8,11 @@ import '../../data/repository/repository_implementer.dart';
 import '../../domain/repository/repository.dart';
 import '../../domain/usecases/login_usecase.dart';
 import '../../domain/usecases/logout_usecase.dart';
+import '../../domain/usecases/update_user_name_usecase.dart';
+import '../../presentation/views/confirm_otp/confirm_otp_view_model.dart';
+import '../../presentation/views/enter_user_name/enter_user_name_view_model.dart';
 import '../../presentation/views/home/home_view_model.dart';
+import '../../presentation/views/login/login_view_model.dart';
 import '../network/app_service_client.dart';
 import '../network/dio_factory.dart';
 import '../network/network_info.dart';
@@ -32,7 +34,7 @@ Future<void> initAppModule() async {
 
   // remote data source
   instance.registerLazySingleton<RemoteDataSource>(
-    () => RemoteDataSourceImplementer(instance<AppServiceClient>()),
+    () => RemoteDataSourceImplementer(instance<AppServiceClient>(), instance<LocalDataSource>()),
   );
 
   // network info instance
@@ -42,7 +44,7 @@ Future<void> initAppModule() async {
 
   // dio factory
   instance.registerLazySingleton<DioFactory>(
-    () => DioFactory(instance<LocalDataSource>()),
+    () => DioFactory(),
   );
 
   // app service client
@@ -67,8 +69,16 @@ void initLoginModule() {
       () => LoginUseCase(instance<Repository>()),
     );
 
+    instance.registerFactory<UpdateUserNameUseCase>(
+      () => UpdateUserNameUseCase(instance<Repository>()),
+    );
+
     instance.registerFactory<LoginViewModel>(
       () => LoginViewModel(),
+    );
+
+    instance.registerFactory<EnterUserNameViewModel>(
+      () => EnterUserNameViewModel(instance<UpdateUserNameUseCase>()),
     );
 
     // login view model

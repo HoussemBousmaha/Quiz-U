@@ -6,9 +6,11 @@ class AppStrings {
 
   static const String countryOrRegion = 'Country/Region';
   static const String enterPhoneNumber = 'Enter Phone Number';
+  static const String enterName = 'Enter your Name';
 
   static const String login = 'Login';
   static const String start = 'Start';
+  static const String done = 'Done';
 
   static const String saudiArabia = 'Saudi Arabia';
 
@@ -17,4 +19,6 @@ class AppStrings {
   static const String error = 'Error';
 
   static const String otpError = 'OTP is 0000';
+
+  static const String whatIsYourName = 'What is your name?';
 }
