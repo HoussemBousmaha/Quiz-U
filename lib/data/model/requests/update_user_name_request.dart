@@ -1,11 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../../core/base/base_request.dart';
-
 part 'update_user_name_request.g.dart';
 
 @JsonSerializable()
-class UpdateUserNameRequest extends BaseRequest {
+class UpdateUserNameRequest {
   @JsonKey(name: 'name')
   final String name;
 

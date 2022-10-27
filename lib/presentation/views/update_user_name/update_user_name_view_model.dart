@@ -6,7 +6,7 @@ import '../base/base_view_model.dart';
 import '../common/state_renderer/state_renderer.dart';
 import '../common/state_renderer/state_renderer_implementer.dart';
 
-class EnterUserNameViewModel extends BaseViewModel {
+class UpdateUserNameViewModel extends BaseViewModel {
   @override
   void start() {}
 
@@ -15,7 +15,7 @@ class EnterUserNameViewModel extends BaseViewModel {
 
   final BehaviorSubject<bool> isLoggedInSuccess = BehaviorSubject<bool>();
   final BehaviorSubject<bool> loggedOut = BehaviorSubject<bool>();
-  EnterUserNameViewModel(this._updateUserNameUseCase, this._logoutUseCase);
+  UpdateUserNameViewModel(this._updateUserNameUseCase, this._logoutUseCase);
 
   Future<void> logout() async {
     inputState.add(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));

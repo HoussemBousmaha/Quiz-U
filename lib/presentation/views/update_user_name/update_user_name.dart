@@ -9,23 +9,23 @@ import '../../../core/resources/color_manager.dart';
 import '../../../core/resources/string_manager.dart';
 import '../../../core/resources/value_manager.dart';
 import '../common/state_renderer/state_renderer_implementer.dart';
-import 'enter_user_name_view_model.dart';
+import 'update_user_name_view_model.dart';
 
-class EnterUserNameView extends StatefulHookConsumerWidget {
-  const EnterUserNameView({super.key});
+class UpdateUserNameView extends StatefulHookConsumerWidget {
+  const UpdateUserNameView({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _EnterUserNameViewState();
 }
 
-class _EnterUserNameViewState extends ConsumerState<EnterUserNameView> {
-  late final EnterUserNameViewModel model;
+class _EnterUserNameViewState extends ConsumerState<UpdateUserNameView> {
+  late final UpdateUserNameViewModel model;
 
   late final TextEditingController controller;
 
   @override
   void initState() {
-    model = instance<EnterUserNameViewModel>();
+    model = instance<UpdateUserNameViewModel>();
     controller = TextEditingController();
 
     model.isLoggedInSuccess.stream.listen(

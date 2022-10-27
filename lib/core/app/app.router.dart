@@ -8,11 +8,11 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_u_final/presentation/views/confirm_otp/confirm_otp.dart'
     as _i4;
-import 'package:quiz_u_final/presentation/views/enter_user_name/enter_user_name.dart'
-    as _i5;
 import 'package:quiz_u_final/presentation/views/home/home.dart' as _i3;
 import 'package:quiz_u_final/presentation/views/login/login.dart' as _i6;
 import 'package:quiz_u_final/presentation/views/splash/splash.dart' as _i2;
+import 'package:quiz_u_final/presentation/views/update_user_name/update_user_name.dart'
+    as _i5;
 import 'package:stacked/stacked.dart' as _i1;
 import 'package:stacked_services/stacked_services.dart' as _i7;
 
@@ -23,7 +23,7 @@ class Routes {
 
   static const confirmOtpView = '/confirm-otp-view';
 
-  static const enterUserNameView = '/enter-user-name-view';
+  static const updateUserNameView = '/update-user-name-view';
 
   static const loginView = '/login-view';
 
@@ -31,7 +31,7 @@ class Routes {
     splashView,
     homeView,
     confirmOtpView,
-    enterUserNameView,
+    updateUserNameView,
     loginView,
   };
 }
@@ -51,8 +51,8 @@ class StackedRouter extends _i1.RouterBase {
       page: _i4.ConfirmOtpView,
     ),
     _i1.RouteDef(
-      Routes.enterUserNameView,
-      page: _i5.EnterUserNameView,
+      Routes.updateUserNameView,
+      page: _i5.UpdateUserNameView,
     ),
     _i1.RouteDef(
       Routes.loginView,
@@ -79,9 +79,9 @@ class StackedRouter extends _i1.RouterBase {
         settings: data,
       );
     },
-    _i5.EnterUserNameView: (data) {
+    _i5.UpdateUserNameView: (data) {
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const _i5.EnterUserNameView(),
+        builder: (context) => const _i5.UpdateUserNameView(),
         settings: data,
       );
     },
@@ -142,14 +142,14 @@ extension NavigatorStateExtension on _i7.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToEnterUserNameView([
+  Future<dynamic> navigateToUpdateUserNameView([
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
   ]) async {
-    return navigateTo<dynamic>(Routes.enterUserNameView,
+    return navigateTo<dynamic>(Routes.updateUserNameView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

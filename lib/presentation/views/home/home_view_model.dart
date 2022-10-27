@@ -6,14 +6,17 @@ import '../common/state_renderer/state_renderer.dart';
 import '../common/state_renderer/state_renderer_implementer.dart';
 
 class HomeViewModel extends BaseViewModel {
+  final BehaviorSubject<bool> loggedOut = BehaviorSubject<bool>();
+
   @override
   void start() {}
 
   final LogoutUseCase _logoutUseCase;
-  final BehaviorSubject<bool> loggedOut = BehaviorSubject<bool>();
+
   HomeViewModel(this._logoutUseCase);
 
   Future<void> logout() async {
+    inputState.add(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
     (await _logoutUseCase.execute(null)).fold(
       (failure) => inputState.add(
         ErrorState(stateRendererType: StateRendererType.popupErrorState, message: failure.message),
