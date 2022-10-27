@@ -1,6 +1,5 @@
 import 'package:rxdart/subjects.dart';
 
-import '../../../core/extensions/general_extensions.dart';
 import '../../../domain/usecases/login_usecase.dart';
 import '../base/base_view_model.dart';
 import '../common/state_renderer/state_renderer.dart';
@@ -26,8 +25,6 @@ class ConfirmOtpViewModel extends BaseViewModel {
         inputState.add(ContentState());
 
         final userStatus = loginModel.userStatus;
-
-        loginModel.token.log();
 
         if (userStatus.isNotEmpty && userStatus == 'new') {
           isNewUser.add(true);
