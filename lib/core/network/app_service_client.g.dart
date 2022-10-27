@@ -93,9 +93,8 @@ class _AppServiceClient implements AppServiceClient {
           data: _data,
         )
         .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-
-    final data = _result.data?.map((score) => ScoreResponse.fromJson(score)).toList();
-    final value = ScoresResponse(data);
+    final scoresReponse = _result.data!.map((scoreAsJson) => ScoreResponse.fromJson(scoreAsJson)).toList();
+    final value = ScoresResponse(scores: scoresReponse);
     return value;
   }
 

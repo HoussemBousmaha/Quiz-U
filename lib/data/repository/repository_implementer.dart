@@ -96,19 +96,29 @@ class RepositoryImplementer extends Repository {
 
   @override
   Future<Either<Failure, ScoresModel>> getTopScores() async {
-    if (await _networkInfo.isConnected) {
-      try {
-        // it is safe to call the API
-        final response = await _remoteDataSource.getTopScores();
+    try {
+      final scoresResponse = _localDataSource.getStoresModel;
 
-        return Right(response.toDomain());
-      } catch (error) {
-        error.log();
-        return Left(ErrorHandler.handle(error).failure);
+      return Right(scoresResponse.toDomain());
+    } catch (err) {
+      if (await _networkInfo.isConnected) {
+        try {
+          // it is safe to call the API
+          final response = await _remoteDataSource.getTopScores();
+
+          final isStored = await _localDataSource.setScoresResponse(response);
+
+          if (isStored) return Right(response.toDomain());
+
+          return Left(ErrorHandler.handle(DataSource.cacheError).failure);
+        } catch (error) {
+          error.log();
+          return Left(ErrorHandler.handle(error).failure);
+        }
+      } else {
+        // return connection error
+        return Left(DataSource.noInternetConnection.getFailure());
       }
-    } else {
-      // return connection error
-      return Left(DataSource.noInternetConnection.getFailure());
     }
   }
 }

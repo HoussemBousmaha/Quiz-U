@@ -15,12 +15,7 @@ class LoginResponse extends BaseResponse {
   @JsonKey(name: 'mobile')
   final String? mobile;
 
-  LoginResponse({
-    this.userStatus,
-    this.token,
-    this.name,
-    this.mobile,
-  });
+  LoginResponse({this.userStatus, this.token, this.name, this.mobile});
 
   // from json
   factory LoginResponse.fromJson(Map<String, dynamic> json) => _$LoginResponseFromJson(json);

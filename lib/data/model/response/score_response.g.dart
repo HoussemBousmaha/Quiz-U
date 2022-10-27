@@ -8,8 +8,8 @@ part of 'score_response.dart';
 
 ScoreResponse _$ScoreResponseFromJson(Map<String, dynamic> json) =>
     ScoreResponse(
-      json['name'] as String?,
-      json['score'] as int?,
+      name: json['name'] as String?,
+      score: json['score'] as int?,
     );
 
 Map<String, dynamic> _$ScoreResponseToJson(ScoreResponse instance) =>

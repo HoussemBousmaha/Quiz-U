@@ -8,7 +8,7 @@ class ScoreResponse {
   final String? name;
   @JsonKey(name: 'score')
   final int? score;
-  ScoreResponse(this.name, this.score);
+  ScoreResponse({this.name, this.score});
 
   // from json
   factory ScoreResponse.fromJson(Map<String, dynamic> json) => _$ScoreResponseFromJson(json);
