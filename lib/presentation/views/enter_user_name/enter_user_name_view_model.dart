@@ -15,6 +15,7 @@ class EnterUserNameViewModel extends BaseViewModel {
   EnterUserNameViewModel(this._updateUserNameUseCase);
 
   Future<void> updateUserName(String name) async {
+    inputState.add(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
     (await _updateUserNameUseCase.execute(
       UpdateUserNameUseCaseInput(name: name),
     ))

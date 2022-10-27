@@ -58,7 +58,13 @@ class _ConfirmOtpViewState extends ConsumerState<ConfirmOtpView> {
     final mobileNumber = ref.watch(mobileNumberProvider);
 
     return Scaffold(
-      appBar: AppBar(backgroundColor: ColorManager.primaryButtonColor),
+      appBar: AppBar(
+        backgroundColor: ColorManager.primaryButtonColor,
+        leading: IconButton(
+          onPressed: () => Navigator.of(context).pushReplacementNamed(Routes.loginView),
+          icon: const Icon(Icons.arrow_back_ios),
+        ),
+      ),
       body: Container(
         alignment: Alignment.center,
         width: double.infinity,

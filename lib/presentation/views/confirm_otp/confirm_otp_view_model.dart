@@ -25,8 +25,9 @@ class ConfirmOtpViewModel extends BaseViewModel {
         inputState.add(ContentState());
 
         final userStatus = loginModel.userStatus;
+        final userName = loginModel.name;
 
-        if (userStatus.isNotEmpty && userStatus == 'new') {
+        if ((userStatus.isNotEmpty && userStatus == 'new') || userName.isEmpty) {
           isNewUser.add(true);
         } else {
           isLoggedInSuccess.add(true);

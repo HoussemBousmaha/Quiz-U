@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:quiz_u_final/core/resources/font_manager.dart';
 
 import '../../../core/app/app.router.dart';
 import '../../../core/dependecy_injection/dependency_injection.dart';
@@ -66,7 +67,10 @@ class _EnterUserNameViewState extends ConsumerState<EnterUserNameView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(AppStrings.whatIsYourName, style: Theme.of(context).textTheme.headline1),
+            Text(
+              AppStrings.whatIsYourName,
+              style: Theme.of(context).textTheme.headline1?.copyWith(color: ColorManager.primaryButtonColor),
+            ),
             SizedBox(height: AppSize.hs100),
             Container(
               alignment: Alignment.center,
@@ -83,6 +87,7 @@ class _EnterUserNameViewState extends ConsumerState<EnterUserNameView> {
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.symmetric(horizontal: AppSize.ws20),
                   hintText: AppStrings.enterName,
+                  hintStyle: Theme.of(context).textTheme.headline4,
                   filled: true,
                   fillColor: ColorManager.textFieldFillColor,
                 ),
@@ -90,16 +95,17 @@ class _EnterUserNameViewState extends ConsumerState<EnterUserNameView> {
             ),
             SizedBox(height: AppSize.hs100),
             Container(
-              height: AppSize.hs50,
               width: double.infinity,
-              margin: EdgeInsets.symmetric(horizontal: AppSize.ws40),
+              margin: EdgeInsets.symmetric(horizontal: AppSize.ws80),
               child: ElevatedButton(
-                onPressed: () async {
-                  model.updateUserName(controller.text);
-                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: ColorManager.primaryButtonColor,
+                  padding: EdgeInsets.symmetric(vertical: AppSize.hs10),
+                ),
+                onPressed: () => model.updateUserName(controller.text),
                 child: Text(
                   AppStrings.done,
-                  style: Theme.of(context).textTheme.headline1,
+                  style: Theme.of(context).textTheme.headline1?.copyWith(fontSize: FontSize.s18),
                 ),
               ),
             ),
