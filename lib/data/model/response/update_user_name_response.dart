@@ -11,10 +11,7 @@ class UpdateUserNameResponse extends BaseResponse {
   @JsonKey(name: 'mobile')
   final String? mobile;
 
-  UpdateUserNameResponse({
-    this.name,
-    this.mobile,
-  });
+  UpdateUserNameResponse({this.name, this.mobile});
 
   // from json
   factory UpdateUserNameResponse.fromJson(Map<String, dynamic> json) => _$UpdateUserNameResponseFromJson(json);

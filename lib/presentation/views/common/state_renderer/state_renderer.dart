@@ -77,7 +77,7 @@ class StateRenderer extends StatelessWidget {
         return _getItemsInColumn(
           [
             _getAnimatedImage(),
-            SizedBox(height: AppSize.hs20),
+            SizedBox(height: AppSize.hs100),
             _getMessage(message),
           ],
         );
@@ -191,7 +191,9 @@ class StateRenderer extends StatelessWidget {
   }
 
   Widget _getItemsInColumn(List<Widget> children) {
-    return Center(
+    return Container(
+      alignment: Alignment.center,
+      color: ColorManager.backgroundColor,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,

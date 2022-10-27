@@ -35,7 +35,7 @@ ThemeData getAppTheme() {
     // App bar theme
     appBarTheme: AppBarTheme(
       centerTitle: true,
-      // color: ColorManager,
+      color: ColorManager.primaryButtonColor,
       elevation: AppSize.ws4,
       // shadowColor: ColorManager.primaryOpacity70,
       titleTextStyle: getRegularStyle(color: ColorManager.white, fontSize: FontSize.s16),
@@ -106,6 +106,14 @@ ThemeData getAppTheme() {
         borderSide: BorderSide(color: ColorManager.white, width: AppSize.ws1),
         borderRadius: BorderRadius.all(Radius.circular(AppSize.ws8)),
       ),
+    ),
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: ColorManager.primaryButtonColor,
+      showUnselectedLabels: false,
+      showSelectedLabels: false,
+      selectedIconTheme: IconThemeData(size: AppSize.hs30, color: ColorManager.white),
+      unselectedIconTheme: IconThemeData(size: AppSize.hs25, color: ColorManager.backgroundColor),
+      type: BottomNavigationBarType.shifting,
     ),
   );
 }

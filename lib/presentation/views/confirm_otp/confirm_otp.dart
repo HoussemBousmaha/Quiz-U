@@ -36,7 +36,7 @@ class _ConfirmOtpViewState extends ConsumerState<ConfirmOtpView> {
 
     model.isNewUser.stream.listen(
       (isSuccessLoggedIn) => SchedulerBinding.instance.addPostFrameCallback(
-        (_) => Navigator.of(context).pushReplacementNamed(Routes.enterUserNameView),
+        (_) => Navigator.of(context).pushReplacementNamed(Routes.updateUserNameView),
       ),
     );
     super.initState();

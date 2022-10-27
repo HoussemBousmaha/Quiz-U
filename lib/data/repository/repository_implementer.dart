@@ -3,9 +3,12 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/error/error_handler.dart';
 import '../../../../core/error/failure.dart';
 import '../../../../core/network/network_info.dart';
+import '../../core/extensions/general_extensions.dart';
 import '../../core/extensions/login_response_extension.dart';
+import '../../core/extensions/top_scores_extension.dart';
 import '../../core/extensions/update_user_name_response_extension.dart';
 import '../../domain/entities/login_model.dart';
+import '../../domain/entities/scores_model.dart';
 import '../../domain/entities/update_user_name_model.dart';
 import '../../domain/repository/repository.dart';
 import '../data_source/local_data_source.dart';
@@ -88,6 +91,34 @@ class RepositoryImplementer extends Repository {
     } else {
       // return connection error
       return Left(DataSource.noInternetConnection.getFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, ScoresModel>> getTopScores() async {
+    try {
+      final scoresResponse = _localDataSource.getStoresModel;
+
+      return Right(scoresResponse.toDomain());
+    } catch (err) {
+      if (await _networkInfo.isConnected) {
+        try {
+          // it is safe to call the API
+          final response = await _remoteDataSource.getTopScores();
+
+          final isStored = await _localDataSource.setScoresResponse(response);
+
+          if (isStored) return Right(response.toDomain());
+
+          return Left(ErrorHandler.handle(DataSource.cacheError).failure);
+        } catch (error) {
+          error.log();
+          return Left(ErrorHandler.handle(error).failure);
+        }
+      } else {
+        // return connection error
+        return Left(DataSource.noInternetConnection.getFailure());
+      }
     }
   }
 }

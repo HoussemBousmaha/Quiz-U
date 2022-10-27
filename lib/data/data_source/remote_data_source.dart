@@ -2,12 +2,14 @@ import '../../core/network/app_service_client.dart';
 import '../model/requests/login_request.dart';
 import '../model/requests/update_user_name_request.dart';
 import '../model/response/login_response.dart';
+import '../model/response/top_scores_response.dart';
 import '../model/response/update_user_name_response.dart';
 import 'local_data_source.dart';
 
 abstract class RemoteDataSource {
   Future<LoginResponse> login(LoginRequest loginRequest);
   Future<UpdateUserNameResponse> updateUserName(UpdateUserNameRequest updateUserNameRequest);
+  Future<ScoresResponse> getTopScores();
 }
 
 class RemoteDataSourceImplementer implements RemoteDataSource {
@@ -30,5 +32,10 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
       _localDataSource.token,
       updateUserNameRequest.name,
     );
+  }
+
+  @override
+  Future<ScoresResponse> getTopScores() async {
+    return await _appServiceClient.getTopScores(_localDataSource.token);
   }
 }
