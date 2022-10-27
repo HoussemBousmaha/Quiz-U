@@ -8,7 +8,6 @@ import '../../../core/dependecy_injection/dependency_injection.dart';
 import '../../../core/resources/color_manager.dart';
 import '../../../core/resources/string_manager.dart';
 import '../../../core/resources/value_manager.dart';
-import '../../../data/data_source/local_data_source.dart';
 import '../common/state_renderer/state_renderer_implementer.dart';
 import 'enter_user_name_view_model.dart';
 
@@ -21,13 +20,12 @@ class EnterUserNameView extends StatefulHookConsumerWidget {
 
 class _EnterUserNameViewState extends ConsumerState<EnterUserNameView> {
   late final EnterUserNameViewModel model;
-  late final LocalDataSource _localDataSource;
+
   late final TextEditingController controller;
 
   @override
   void initState() {
     model = instance<EnterUserNameViewModel>();
-    _localDataSource = instance<LocalDataSource>();
     controller = TextEditingController();
 
     model.isLoggedInSuccess.stream.listen(
@@ -35,6 +33,13 @@ class _EnterUserNameViewState extends ConsumerState<EnterUserNameView> {
         (_) => Navigator.of(context).pushReplacementNamed(Routes.homeView),
       ),
     );
+
+    model.loggedOut.stream.listen(
+      (_) => SchedulerBinding.instance.addPostFrameCallback(
+        (_) => Navigator.of(context).pushReplacementNamed(Routes.loginView),
+      ),
+    );
+
     super.initState();
   }
 
@@ -54,10 +59,7 @@ class _EnterUserNameViewState extends ConsumerState<EnterUserNameView> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ColorManager.primaryButtonColor,
-        leading: IconButton(
-          onPressed: () => Navigator.of(context).pushReplacementNamed(Routes.confirmOtpView),
-          icon: const Icon(Icons.arrow_back_ios),
-        ),
+        leading: IconButton(onPressed: model.logout, icon: const Icon(Icons.arrow_back_ios)),
       ),
       backgroundColor: ColorManager.backgroundColor,
       body: Container(

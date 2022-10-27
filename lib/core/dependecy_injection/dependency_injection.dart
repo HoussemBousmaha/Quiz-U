@@ -78,7 +78,7 @@ void initLoginModule() {
     );
 
     instance.registerFactory<EnterUserNameViewModel>(
-      () => EnterUserNameViewModel(instance<UpdateUserNameUseCase>()),
+      () => EnterUserNameViewModel(instance<UpdateUserNameUseCase>(), instance<LogoutUseCase>()),
     );
 
     // login view model

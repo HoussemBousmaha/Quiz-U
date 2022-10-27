@@ -1,3 +1,4 @@
+import 'package:quiz_u_final/domain/usecases/logout_usecase.dart';
 import 'package:rxdart/subjects.dart';
 
 import '../../../domain/usecases/update_user_name_usecase.dart';
@@ -10,9 +11,24 @@ class EnterUserNameViewModel extends BaseViewModel {
   void start() {}
 
   final UpdateUserNameUseCase _updateUserNameUseCase;
+  final LogoutUseCase _logoutUseCase;
 
   final BehaviorSubject<bool> isLoggedInSuccess = BehaviorSubject<bool>();
-  EnterUserNameViewModel(this._updateUserNameUseCase);
+  final BehaviorSubject<bool> loggedOut = BehaviorSubject<bool>();
+  EnterUserNameViewModel(this._updateUserNameUseCase, this._logoutUseCase);
+
+  Future<void> logout() async {
+    inputState.add(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
+    (await _logoutUseCase.execute(null)).fold(
+      (failure) => inputState.add(
+        ErrorState(stateRendererType: StateRendererType.fullScreenErrorState, message: failure.message),
+      ),
+      (isLoggedOut) {
+        inputState.add(ContentState());
+        loggedOut.add(true);
+      },
+    );
+  }
 
   Future<void> updateUserName(String name) async {
     inputState.add(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
