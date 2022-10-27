@@ -60,10 +60,10 @@ ThemeData getAppTheme() {
 
     // Text theme
     textTheme: TextTheme(
-      headline1: getSemiBoldStyle(color: ColorManager.primaryTextColor, fontSize: FontSize.s22),
+      headline1: getBoldStyle(color: ColorManager.primaryTextColor, fontSize: FontSize.s22),
       headline2: getBoldStyle(color: ColorManager.primaryTextColor, fontSize: FontSize.s14),
       headline3: getBoldStyle(color: ColorManager.secondaryTextColor, fontSize: FontSize.s10),
-      headline4: getRegularStyle(color: ColorManager.primaryTextColor, fontSize: FontSize.s12),
+      headline4: getBoldStyle(color: ColorManager.primaryTextColor, fontSize: FontSize.s12),
       subtitle1: getMediumStyle(color: ColorManager.secondaryTextColor, fontSize: FontSize.s14),
       subtitle2: getMediumStyle(color: ColorManager.secondaryTextColor, fontSize: FontSize.s14),
       caption: getRegularStyle(color: ColorManager.secondaryTextColor),

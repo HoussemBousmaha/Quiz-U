@@ -7,8 +7,9 @@ part of 'login_request.dart';
 // **************************************************************************
 
 LoginRequest _$LoginRequestFromJson(Map<String, dynamic> json) => LoginRequest(
+      otp: json['OTP'] as String,
       mobile: json['mobile'] as String,
-    )..otp = json['OTP'] as String;
+    );
 
 Map<String, dynamic> _$LoginRequestToJson(LoginRequest instance) =>
     <String, dynamic>{

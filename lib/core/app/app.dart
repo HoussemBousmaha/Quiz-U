@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../presentation/views/confirm_otp/confirm_otp.dart';
+import '../../presentation/views/enter_user_name/enter_user_name.dart';
 import '../../presentation/views/home/home.dart';
 import '../../presentation/views/login/login.dart';
 import '../../presentation/views/splash/splash.dart';
@@ -15,6 +16,7 @@ import 'app.router.dart';
     MaterialRoute(page: SplashView, initial: true),
     MaterialRoute(page: HomeView),
     MaterialRoute(page: ConfirmOtpView),
+    MaterialRoute(page: EnterUserNameView),
     MaterialRoute(page: LoginView),
   ],
   dependencies: [

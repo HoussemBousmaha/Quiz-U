@@ -6,7 +6,8 @@ import '../common/state_renderer/state_renderer.dart';
 import '../common/state_renderer/state_renderer_implementer.dart';
 
 class ConfirmOtpViewModel extends BaseViewModel {
-  final BehaviorSubject<bool> loggedIn = BehaviorSubject<bool>();
+  final BehaviorSubject<bool> isLoggedInSuccess = BehaviorSubject<bool>();
+  final BehaviorSubject<bool> isNewUser = BehaviorSubject<bool>();
 
   final LoginUseCase _loginUseCase;
   ConfirmOtpViewModel(this._loginUseCase);
@@ -20,9 +21,17 @@ class ConfirmOtpViewModel extends BaseViewModel {
       (failure) => inputState.add(
         ErrorState(stateRendererType: StateRendererType.fullScreenErrorState, message: failure.message),
       ),
-      (loginObject) {
+      (loginModel) {
         inputState.add(ContentState());
-        loggedIn.add(true);
+
+        final userStatus = loginModel.userStatus;
+        final userName = loginModel.name;
+
+        if ((userStatus.isNotEmpty && userStatus == 'new') || userName.isEmpty) {
+          isNewUser.add(true);
+        } else {
+          isLoggedInSuccess.add(true);
+        }
       },
     );
   }

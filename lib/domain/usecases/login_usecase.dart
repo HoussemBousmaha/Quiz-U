@@ -13,7 +13,7 @@ class LoginUseCase extends BaseUseCase<LoginUseCaseInput, LoginModel> {
 
   @override
   Future<Either<Failure, LoginModel>> execute(input) async {
-    return await _repository.login(LoginRequest(mobile: input.mobile));
+    return await _repository.login(LoginRequest(otp: '0000', mobile: input.mobile));
   }
 }
 

@@ -73,7 +73,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
       width: double.infinity,
       margin: EdgeInsets.symmetric(horizontal: AppSize.ws40),
       child: ElevatedButton(
-        onPressed: () => Navigator.of(context).pushNamed(Routes.confirmOtpView),
+        onPressed: () => Navigator.of(context).pushReplacementNamed(Routes.confirmOtpView),
         child: Text(
           AppStrings.start,
           style: Theme.of(context).textTheme.headline1,
@@ -86,8 +86,8 @@ class _LoginViewState extends ConsumerState<LoginView> {
     return Container(
       alignment: Alignment.center,
       height: AppSize.hs60,
-      decoration: const BoxDecoration(),
       child: TextField(
+        onSubmitted: (_) => Navigator.of(context).pushReplacementNamed(Routes.confirmOtpView),
         onChanged: (mobileNumber) => ref.read(mobileNumberProvider.notifier).state = mobileNumber,
         cursorColor: ColorManager.white,
         textInputAction: TextInputAction.done,

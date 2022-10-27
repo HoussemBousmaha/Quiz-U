@@ -28,9 +28,15 @@ class _ConfirmOtpViewState extends ConsumerState<ConfirmOtpView> {
   void initState() {
     model = instance<ConfirmOtpViewModel>();
 
-    model.loggedIn.stream.listen(
+    model.isLoggedInSuccess.stream.listen(
       (isSuccessLoggedIn) => SchedulerBinding.instance.addPostFrameCallback(
         (_) => Navigator.of(context).pushReplacementNamed(Routes.homeView),
+      ),
+    );
+
+    model.isNewUser.stream.listen(
+      (isSuccessLoggedIn) => SchedulerBinding.instance.addPostFrameCallback(
+        (_) => Navigator.of(context).pushReplacementNamed(Routes.enterUserNameView),
       ),
     );
     super.initState();
@@ -52,7 +58,13 @@ class _ConfirmOtpViewState extends ConsumerState<ConfirmOtpView> {
     final mobileNumber = ref.watch(mobileNumberProvider);
 
     return Scaffold(
-      appBar: AppBar(backgroundColor: ColorManager.primaryButtonColor),
+      appBar: AppBar(
+        backgroundColor: ColorManager.primaryButtonColor,
+        leading: IconButton(
+          onPressed: () => Navigator.of(context).pushReplacementNamed(Routes.loginView),
+          icon: const Icon(Icons.arrow_back_ios),
+        ),
+      ),
       body: Container(
         alignment: Alignment.center,
         width: double.infinity,
@@ -60,39 +72,44 @@ class _ConfirmOtpViewState extends ConsumerState<ConfirmOtpView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            OtpTextField(
-              numberOfFields: 4,
-              showCursor: true,
-              showFieldAsBox: true,
-              fieldWidth: AppSize.ws55,
-              cursorColor: ColorManager.primaryTextColor,
-              filled: true,
-              fillColor: ColorManager.textFieldFillColor,
-              borderColor: ColorManager.white,
-              focusedBorderColor: ColorManager.white,
-              enabledBorderColor: ColorManager.white,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                FilteringTextInputFormatter.digitsOnly
-              ],
-              styles: [
-                Theme.of(context).textTheme.headline2?.copyWith(fontSize: FontSize.s20),
-                Theme.of(context).textTheme.headline2?.copyWith(fontSize: FontSize.s20),
-                Theme.of(context).textTheme.headline2?.copyWith(fontSize: FontSize.s20),
-                Theme.of(context).textTheme.headline2?.copyWith(fontSize: FontSize.s20),
-              ],
-              onCodeChanged: (String code) {},
-              onSubmit: (String verificationCode) async {
-                if (verificationCode != AppStrings.otp) {
-                  await _showOtpErrorDialog(context);
-                } else {
-                  await model.login('+966$mobileNumber');
-                }
-              },
-            ),
+            _getOtpTextField(context, mobileNumber),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _getOtpTextField(BuildContext context, String mobileNumber) {
+    return OtpTextField(
+      autoFocus: true,
+      numberOfFields: 4,
+      showCursor: true,
+      showFieldAsBox: true,
+      fieldWidth: AppSize.ws55,
+      cursorColor: ColorManager.primaryTextColor,
+      filled: true,
+      fillColor: ColorManager.textFieldFillColor,
+      borderColor: ColorManager.white,
+      focusedBorderColor: ColorManager.white,
+      enabledBorderColor: ColorManager.white,
+      inputFormatters: <TextInputFormatter>[
+        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+        FilteringTextInputFormatter.digitsOnly
+      ],
+      styles: [
+        Theme.of(context).textTheme.headline2?.copyWith(fontSize: FontSize.s20),
+        Theme.of(context).textTheme.headline2?.copyWith(fontSize: FontSize.s20),
+        Theme.of(context).textTheme.headline2?.copyWith(fontSize: FontSize.s20),
+        Theme.of(context).textTheme.headline2?.copyWith(fontSize: FontSize.s20),
+      ],
+      onCodeChanged: (String code) {},
+      onSubmit: (String verificationCode) async {
+        if (verificationCode != AppStrings.otp) {
+          await _showOtpErrorDialog(context);
+        } else {
+          await model.login('+966$mobileNumber');
+        }
+      },
     );
   }
 
