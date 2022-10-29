@@ -38,4 +38,18 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
   Future<ScoresResponse> getTopScores() async {
     return await _appServiceClient.getTopScores(_localDataSource.token);
   }
+
+  @override
+  bool operator ==(covariant RemoteDataSourceImplementer other) {
+    if (identical(this, other)) return true;
+
+    return other._appServiceClient == _appServiceClient && other._localDataSource == _localDataSource;
+  }
+
+  @override
+  int get hashCode => _appServiceClient.hashCode ^ _localDataSource.hashCode;
+
+  @override
+  String toString() =>
+      'RemoteDataSourceImplementer(_appServiceClient: $_appServiceClient, _localDataSource: $_localDataSource)';
 }

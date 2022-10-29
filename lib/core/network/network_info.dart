@@ -18,4 +18,17 @@ class NetworkInfoImplementer implements NetworkInfo {
 
     return isConnected && isWifiConnected;
   }
+
+  @override
+  String toString() => 'NetworkInfoImplementer(_dataConnectionChecker: $_dataConnectionChecker)';
+
+  @override
+  bool operator ==(covariant NetworkInfoImplementer other) {
+    if (identical(this, other)) return true;
+
+    return other._dataConnectionChecker == _dataConnectionChecker;
+  }
+
+  @override
+  int get hashCode => _dataConnectionChecker.hashCode;
 }

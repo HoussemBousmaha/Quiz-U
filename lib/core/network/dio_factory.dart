@@ -11,7 +11,7 @@ const String applicationJson = 'application/json';
 const String accept = 'accept';
 
 class DioFactory {
-  Future<Dio> getDio() async {
+  Dio getDio() {
     // dio instance
     Dio dio = Dio();
 

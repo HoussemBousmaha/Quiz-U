@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:quiz_u_final/data/model/response/score_response.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../data/model/response/login_response.dart';
+import '../../data/model/response/score_response.dart';
 import '../../data/model/response/top_scores_response.dart';
 import '../../data/model/response/update_user_name_response.dart';
 import '../resources/constants.dart';
