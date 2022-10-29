@@ -21,7 +21,11 @@ class _HomeViewState extends ConsumerState<HomeView> {
   void initState() {
     ref.read(isUserLoggedOutStreamProvider.stream).listen(
       (isLoggedOut) {
-        if (isLoggedOut && mounted) Navigator.of(context).pushReplacementNamed(Routes.loginRoute);
+        if (isLoggedOut && mounted) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.of(context).pushReplacementNamed(Routes.loginRoute);
+          });
+        }
       },
     );
 

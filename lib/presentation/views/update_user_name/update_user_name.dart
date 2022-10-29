@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../core/extensions/general_extensions.dart';
@@ -31,9 +30,9 @@ class _EnterUserNameViewState extends ConsumerState<UpdateUserNameView> {
     ref.read(isUserLoggedInStreamProvider.stream).listen(
       (isUserLoggedIn) {
         if (isUserLoggedIn && mounted) {
-          return SchedulerBinding.instance.addPostFrameCallback(
-            (_) => Navigator.of(context).pushReplacementNamed(Routes.homeRoute),
-          );
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.of(context).pushReplacementNamed(Routes.homeRoute);
+          });
         }
       },
     );
@@ -41,9 +40,9 @@ class _EnterUserNameViewState extends ConsumerState<UpdateUserNameView> {
     ref.read(isUserLoggedOutStreamProvider.stream).listen(
       (isUserLoggedOut) {
         if (isUserLoggedOut && mounted) {
-          return SchedulerBinding.instance.addPostFrameCallback(
-            (_) => Navigator.of(context).pushReplacementNamed(Routes.loginRoute),
-          );
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.of(context).pushReplacementNamed(Routes.loginRoute);
+          });
         }
       },
     );

@@ -20,13 +20,21 @@ class _ConfirmOtpViewState extends ConsumerState<ConfirmOtpView> {
   void initState() {
     ref.read(isUserLoggedInStreamProvider.stream).listen(
       (isUserLoggedIn) {
-        if (isUserLoggedIn && mounted) Navigator.of(context).pushReplacementNamed(Routes.homeRoute);
+        if (isUserLoggedIn && mounted) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.of(context).pushReplacementNamed(Routes.homeRoute);
+          });
+        }
       },
     );
 
     ref.read(isNewUserStreamProvider.stream).listen(
       (isNewUser) {
-        if (isNewUser && mounted) Navigator.of(context).pushReplacementNamed(Routes.updateUserNameRoute);
+        if (isNewUser && mounted) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.of(context).pushReplacementNamed(Routes.updateUserNameRoute);
+          });
+        }
       },
     );
 
