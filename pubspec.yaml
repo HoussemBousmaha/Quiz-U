@@ -1,5 +1,4 @@
-name: quiz_u_final
-description: A new Flutter project.
+name: quiz_u_okoul
 
 publish_to: "none"
 
@@ -32,8 +31,6 @@ dependencies:
   shared_preferences: ^2.0.15
 
 dev_dependencies:
-
-  # Generators
   build_runner: ^2.3.2
   flutter_lints: ^2.0.0
   flutter_test:

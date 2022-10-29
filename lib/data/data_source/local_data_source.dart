@@ -2,15 +2,15 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:quiz_u_final/data/model/response/top_scores_response.dart';
-
 import '../../core/error/error_handler.dart';
+import '../model/response/top_scores_response.dart';
 
 const String tokenKey = 'TOKEN_KEY';
 const String storesModelKey = 'STORES_MODEL_KEY';
 
 abstract class LocalDataSource {
   String get token;
+
   Future<bool> setToken(String token);
   Future<bool> removeToken();
 
