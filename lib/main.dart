@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_u_final/core/dependecy_injection/dependency_injection.dart';
 
 import 'core/app/app.dart';
-import 'core/app/app.locator.dart';
+import 'core/providers/dependency_injection.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  await setupLocator();
-  await initAppModule();
-
+  await initModules();
   runApp(QuizUApp());
 }

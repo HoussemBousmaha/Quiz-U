@@ -121,4 +121,16 @@ class RepositoryImplementer extends Repository {
       }
     }
   }
+
+  @override
+  bool operator ==(covariant RepositoryImplementer other) {
+    if (identical(this, other)) return true;
+
+    return other._remoteDataSource == _remoteDataSource &&
+        other._localDataSource == _localDataSource &&
+        other._networkInfo == _networkInfo;
+  }
+
+  @override
+  int get hashCode => _remoteDataSource.hashCode ^ _localDataSource.hashCode ^ _networkInfo.hashCode;
 }

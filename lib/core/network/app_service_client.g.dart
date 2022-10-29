@@ -109,4 +109,17 @@ class _AppServiceClient implements AppServiceClient {
     }
     return requestOptions;
   }
+
+  @override
+  String toString() => '_AppServiceClient(_dio: $_dio)';
+
+  @override
+  bool operator ==(covariant _AppServiceClient other) {
+    if (identical(this, other)) return true;
+
+    return other._dio == _dio;
+  }
+
+  @override
+  int get hashCode => _dio.hashCode;
 }

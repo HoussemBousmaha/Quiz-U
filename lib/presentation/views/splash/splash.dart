@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../data/data_source/local_data_source.dart';
-import '../../../core/app/app.router.dart';
-import '../../../core/dependecy_injection/dependency_injection.dart';
+import '../../../core/providers/dependency_injection.dart';
 import '../../../core/resources/color_manager.dart';
+import '../../../core/resources/route_manager.dart';
+import '../../../data/data_source/local_data_source.dart';
 
 class SplashView extends StatefulHookConsumerWidget {
   const SplashView({super.key});
@@ -21,13 +21,14 @@ class _SplashViewState extends ConsumerState<SplashView> {
   void _startDelay() => Timer(const Duration(milliseconds: 500), _goNext);
 
   void _goNext() {
-    Navigator.of(context).pushReplacementNamed(_localDataSource.token.isNotEmpty ? Routes.homeView : Routes.loginView);
+    Navigator.of(context).pushReplacementNamed(
+      _localDataSource.token.isNotEmpty ? Routes.homeRoute : Routes.loginRoute,
+    );
   }
 
   @override
   void initState() {
-    _localDataSource = instance<LocalDataSource>();
-
+    _localDataSource = ref.read(localDataSourceProvider);
     super.initState();
 
     _startDelay();

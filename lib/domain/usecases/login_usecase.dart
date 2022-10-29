@@ -15,6 +15,19 @@ class LoginUseCase extends BaseUseCase<LoginUseCaseInput, LoginModel> {
   Future<Either<Failure, LoginModel>> execute(input) async {
     return await _repository.login(LoginRequest(otp: '0000', mobile: input.mobile));
   }
+
+  @override
+  bool operator ==(covariant LoginUseCase other) {
+    if (identical(this, other)) return true;
+
+    return other._repository == _repository;
+  }
+
+  @override
+  int get hashCode => _repository.hashCode;
+
+  @override
+  String toString() => 'LoginUseCase(_repository: $_repository)';
 }
 
 class LoginUseCaseInput {

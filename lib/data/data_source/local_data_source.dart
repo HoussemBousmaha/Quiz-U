@@ -1,7 +1,8 @@
 import 'dart:convert';
 
-import 'package:quiz_u_final/data/model/response/top_scores_response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:quiz_u_final/data/model/response/top_scores_response.dart';
 
 import '../../core/error/error_handler.dart';
 
@@ -55,4 +56,17 @@ class LocalDataSourceImplementer implements LocalDataSource {
 
   @override
   Future<bool> removeScoresModel() async => await _sharedPreferences.remove(storesModelKey);
+
+  @override
+  bool operator ==(covariant LocalDataSourceImplementer other) {
+    if (identical(this, other)) return true;
+
+    return other._sharedPreferences == _sharedPreferences;
+  }
+
+  @override
+  int get hashCode => _sharedPreferences.hashCode;
+
+  @override
+  String toString() => 'LocalDataSourceImplementer(_sharedPreferences: $_sharedPreferences)';
 }
