@@ -1,7 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
-import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:quiz_u_okoul/core/error/error_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/data_source/local_data_source.dart';
@@ -12,54 +12,16 @@ import '../network/app_service_client.dart';
 import '../network/dio_factory.dart';
 import '../network/network_info.dart';
 
-final instance = GetIt.instance;
-
-Future<void> initModules() async {
-  final sharedPrefs = await SharedPreferences.getInstance();
-
-  instance.registerSingleton<SharedPreferences>(
-    sharedPrefs,
-  );
-
-  instance.registerLazySingleton<DioFactory>(
-    () => DioFactory(),
-  );
-
-  instance.registerLazySingleton<Dio>(
-    () => instance<DioFactory>().getDio(),
-  );
-
-  instance.registerLazySingleton<Connectivity>(
-    () => Connectivity(),
-  );
-
-  instance.registerLazySingleton<NetworkInfo>(
-    () => NetworkInfoImplementer(instance<Connectivity>()),
-  );
-
-  instance.registerLazySingleton<AppServiceClient>(
-    () => AppServiceClient(instance<Dio>()),
-  );
-
-  instance.registerLazySingleton<LocalDataSource>(
-    () => LocalDataSourceImplementer(sharedPrefs),
-  );
-
-  instance.registerLazySingleton<RemoteDataSource>(
-    () => RemoteDataSourceImplementer(instance<AppServiceClient>(), instance<LocalDataSource>()),
-  );
-
-  instance.registerLazySingleton<Repository>(
-    () => RepositoryImplementer(instance<RemoteDataSource>(), instance<LocalDataSource>(), instance<NetworkInfo>()),
-  );
-}
-
-final dioFactoryProvider = Provider.autoDispose<DioFactory>((ref) {
-  return instance<DioFactory>();
+final sharedPrefsProvider = Provider<SharedPreferences>((_) {
+  throw ErrorHandler.handle(DataSource.cacheError);
 });
 
-final dioProvider = Provider.autoDispose<Dio>((ref) {
-  return instance<Dio>();
+final dioFactoryProvider = Provider<DioFactory>((ref) {
+  return DioFactory();
+});
+
+final dioProvider = Provider<Dio>((ref) {
+  return Dio();
 });
 
 final appServiceClientProvider = Provider.autoDispose<AppServiceClient>((ref) {
@@ -69,7 +31,8 @@ final appServiceClientProvider = Provider.autoDispose<AppServiceClient>((ref) {
 });
 
 final localDataSourceProvider = Provider.autoDispose<LocalDataSource>((ref) {
-  final sharedPrefs = instance<SharedPreferences>();
+  final sharedPrefs = ref.watch(sharedPrefsProvider);
+
   return LocalDataSourceImplementer(sharedPrefs);
 });
 
