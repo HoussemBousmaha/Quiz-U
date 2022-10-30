@@ -30,6 +30,7 @@ quiz_u_final.code-workspace
 .flutter-plugins-dependencies
 .packages
 .pub-cache/
+.flutter-plugins-dependencies
 .pub/
 /build/
 
