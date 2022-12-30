@@ -4,18 +4,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../resources/route_manager.dart';
 import '../resources/theme_manager.dart';
 
-class QuizUApp extends StatefulWidget {
-  const QuizUApp._internal();
-
-  factory QuizUApp() => const QuizUApp._internal();
+class QuizUApp extends HookConsumerWidget {
+  const QuizUApp({super.key});
 
   @override
-  State<QuizUApp> createState() => _QuizUAppState();
-}
-
-class _QuizUAppState extends State<QuizUApp> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return ProviderScope(
       child: MaterialApp(
         theme: getAppTheme(),

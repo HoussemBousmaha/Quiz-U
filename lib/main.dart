@@ -6,5 +6,5 @@ import 'core/providers/dependency_injection.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initModules();
-  runApp(QuizUApp());
+  runApp(const QuizUApp());
 }
